@@ -31,8 +31,8 @@ template {
     max_replicas = 10
     min_replicas = 0
     container {
-      name   = "api-demo"
-      image  = "user/api-songsearch:latest"
+      name   = "api-songsearch"
+      image  = "geraldnc88/api-songsearch:latest"
       cpu    = "0.25"
       memory = "0.5Gi"
       env {
