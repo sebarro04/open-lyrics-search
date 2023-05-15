@@ -1,5 +1,12 @@
 import csv
 
+def isfloat(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+
 def load_artists_csv(filename: str) -> list | Exception:
     with open(filename, mode='r', encoding='utf8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
@@ -11,7 +18,12 @@ def load_artists_csv(filename: str) -> list | Exception:
                 row['genres'] = row.pop('Genres')
                 row['songs'] = row.pop('Songs')
                 row['popularity'] = row.pop('Popularity')
-                row['link'] = row.pop('Link')            
+                row['link'] = row.pop('Link')
+                # data transform
+                if (row['songs'].isnumeric()):
+                    row['songs'] = int(row['songs'])  
+                if (isfloat(row['popularity'])):
+                    row['popularity'] = float(row['popularity'])
                 row['genres'] = row['genres'].split(';')
                 artists_data.append(row)
         except Exception as ex:
@@ -51,7 +63,9 @@ def link_songs_with_artists(songs: list, artists: list) -> list:
 
 def load_data():
     songs = load_lyrics_csv('src/loader/tmp/lyrics-data.csv')
+    #print(songs)
     artists = load_artists_csv('src/loader/tmp/artists-data.csv')
+    #print(artists)
     linked_data = link_songs_with_artists(songs, artists)
     print(linked_data)
 
