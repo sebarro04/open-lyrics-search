@@ -8,6 +8,7 @@ COPY app/. .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 RUN python -u Test.py
-#RUN rm .env
+RUN rm Test.py
+RUN rm .env
 
-CMD ["python3", "./loader.py"]
+CMD ["python3", "./__init__.py"]
