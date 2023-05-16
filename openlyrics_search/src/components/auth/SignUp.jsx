@@ -35,13 +35,17 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error);
+        var errorMessage = document.getElementById('errorLogin');
+        errorMessage.style.display = "block";
+        errorMessage.textContent = "Datos no válidos";
+        document.getElementById('espace').style.display = "none";
       });
   };
 
   const navigate = useNavigate();
 
   return (
-    <div className="sign-in_up-container">
+    <div className="sign_up-container">
       <form onSubmit={signUp} className="container">
         <h1 className="title">Crear Cuenta</h1>
         <h3 className="text">Ingrese su correo</h3>
@@ -76,7 +80,8 @@ const SignUp = () => {
           value={birthdate}
           onChange={(e) => setBirthdate(e.target.value)}
         ></input>
-        <br></br>
+        <h3 id="errorLogin" className="message">Error</h3>
+        <br id="espace"></br>
         <button type="submit" className="buttonLogin">Registrarse</button>
         <button onClick={()=>navigate('/')} className="buttonLogin">Iniciar Sesión</button>
       </form>

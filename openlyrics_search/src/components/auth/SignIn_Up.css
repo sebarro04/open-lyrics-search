@@ -1,9 +1,19 @@
 
-.sign-in_up-container {
+  .sign_in-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('../../../public/backgroundLogin.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .sign_up-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 115vh;
     background-image: url('../../../public/backgroundLogin.jpg');
     background-size: cover;
     background-position: center;
@@ -64,5 +74,10 @@
   .buttonLogin:not(:last-child) {
     margin-right: 10px;
   }
-  
+
+  .message {
+    text-align: center;
+    display: none;
+    color: #c43838;
+  }
   

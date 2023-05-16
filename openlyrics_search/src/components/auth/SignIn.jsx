@@ -16,13 +16,17 @@ const SignIn = () => {
       })
       .catch((error) => {
         console.log(error);
+        var errorMessage = document.getElementById('errorLogin');
+        errorMessage.style.display = "block";
+        errorMessage.textContent = "Correo o contraseña incorrecta";
+        document.getElementById('espace').style.display = "none";
       });
   };
 
   const navigate = useNavigate();
 
   return (
-    <div className="sign-in_up-container">
+    <div className="sign_in-container">
       <form onSubmit={signIn} className="container">
         <h1 className="title">Iniciar Sesión</h1>
         <h3 className="text">Ingrese su correo</h3>
@@ -42,9 +46,9 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         ></input>
         <br></br>
-        <br></br>
+        <h3 id="errorLogin" className="message">Error</h3>
+        <br id="espace"></br>
         <button type="submit" className="buttonLogin">Iniciar Sesión</button>
-        
         <button onClick={()=>navigate('/signUp')} className="buttonLogin">Registrarse</button>
       </form>
     </div>
