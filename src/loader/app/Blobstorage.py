@@ -2,8 +2,7 @@ import os
 from decouple import config
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
-# set absolute path to .py
-FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.dirname(os.path.abspath(__file__)) # set absolute path to .py
 
 class Blobstorage:
     def __init__(self):
