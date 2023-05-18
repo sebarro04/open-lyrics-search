@@ -1,5 +1,5 @@
 import csv
-import Blobstorage
+import logging
 
 def isfloat(num):
     try:
@@ -8,9 +8,9 @@ def isfloat(num):
     except ValueError:
         return False
 
-def load_csv(filename: str) -> tuple[int, list] | Exception:
+def load_csv(filename: str) -> tuple[int, list] | None:
     with open(filename, mode='r', encoding='utf8') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
+        csv_reader = csv.DictReader(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         headers = csv_reader.fieldnames
         print(headers)
         if 'Artist' in headers:
@@ -31,8 +31,8 @@ def load_csv(filename: str) -> tuple[int, list] | Exception:
                     row['genres'] = row['genres'].split(';')
                     artists_data.append(row)
             except Exception as ex:
-                print(ex)
-                return Exception('Invalid csv format')
+                logging.exception('Invalid csv format')
+                return None
             return 1, artists_data # 1 as flag to indicate artists
         lyrics_data = []
         try:
@@ -45,30 +45,18 @@ def load_csv(filename: str) -> tuple[int, list] | Exception:
                 row['language'] = row.pop('language')
                 lyrics_data.append(row)
         except Exception as ex:
-            print(ex)
-            return Exception('Invalid csv format')
+            logging.exception('Invalid csv format')
+            return None
         return 2, lyrics_data # 2 as flag to indicate lyrics
 
 def link_songs_with_artists(songs: list, artists: list) -> list:
     linked_data = []
     for artist in artists:
-        song_count = 0
         for song in songs:
             if artist['link'] == song['artist_link']:
                 song['artist'] = artist
                 linked_data.append(song)
-                song_count += 1
-        songs[song_count:]
     return linked_data
 
-def load_data() -> None:
-    blob_client = Blobstorage.Blobstorage()
-    blob_names_list = blob_client.list_blobs_names('documents')
-    print(blob_names_list)
-    for blob_name in blob_names_list:
-        print(f'Downloading {blob_name}')
-        blob_client.download_blob('documents', blob_name)
-        blob_client.delete_temporary_blob()
-
 if __name__ == '__main__':
-    load_data()
+    print(load_csv('src/loader/tmp/lyrics-data-2.csv')[1])
