@@ -2,6 +2,12 @@ import os
 from decouple import config
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
+# set absolute path to .py
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+# This will be the path to your text file, if it is in the same directory as the .py
+LEVELS_FILE_PATH = os.path.join(FILE_PATH, "levels.txt")
+
 class Blobstorage:
     def __init__(self):
         try:
@@ -30,7 +36,7 @@ class Blobstorage:
             print('Error downloading the blob')
             return None
         
-    def delete_temporary_blob(self, filename: str) -> None:
+    def delete_local_blob(self, filename: str) -> None:
         try:
             os.remove(f'src/loader/tmp/{filename}')
         except Exception as ex:
