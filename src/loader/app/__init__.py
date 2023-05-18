@@ -1,4 +1,4 @@
-import loader
+import data_loader
 
 if __name__ == '__main__':
-    loader.load_data()
+    data_loader.isfloat(1)
