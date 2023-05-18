@@ -5,9 +5,6 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 # set absolute path to .py
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 
-# This will be the path to your text file, if it is in the same directory as the .py
-LEVELS_FILE_PATH = os.path.join(FILE_PATH, "levels.txt")
-
 class Blobstorage:
     def __init__(self):
         try:
