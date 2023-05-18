@@ -1,3 +1,3 @@
 azure-storage-blob
-decouple
+python-decouple
 pymongo
