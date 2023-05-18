@@ -46,11 +46,11 @@ const SignUp = () => {
 
   return (
     <div className="sign_up-container">
-      <form onSubmit={signUp} className="container">
+      <form onSubmit={signUp} className="formSignUp">
         <h1 className="title">Crear Cuenta</h1>
         <h3 className="text">Ingrese su correo</h3>
         <input
-          className="textBox"
+          className="textBoxSingUp"
           type="email"
           placeholder="Correo"
           value={email}
@@ -58,7 +58,7 @@ const SignUp = () => {
         ></input>
         <h3 className="text">Ingrese su contraseña</h3>
         <input
-          className="textBox"
+          className="textBoxSingUp"
           type="password"
           placeholder="Contraseña"
           value={password}
@@ -66,7 +66,7 @@ const SignUp = () => {
         ></input>
         <h3 className="text">Ingrese su nombre de perfil</h3>
         <input
-          className="textBox"
+          className="textBoxSingUp"
           type="text"
           placeholder="Nombre de perfil"
           value={name}
@@ -74,7 +74,7 @@ const SignUp = () => {
         ></input>
         <h3 className="text">Ingrese su fecha de nacimiento</h3>
         <input
-          className="textBox"
+          className="textBoxSingUp"
           type="date"
           placeholder="Fecha de nacimiento"
           value={birthdate}
@@ -82,8 +82,8 @@ const SignUp = () => {
         ></input>
         <h3 id="errorLogin" className="message">Error</h3>
         <br id="espace"></br>
-        <button type="submit" className="buttonLogin">Registrarse</button>
-        <button onClick={()=>navigate('/')} className="buttonLogin">Iniciar Sesión</button>
+        <button type="submit" className="buttons">Registrarse</button>
+        <button onClick={()=>navigate('/')} className="buttons">Iniciar Sesión</button>
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import SignUp from './components/auth/SignUp';
 import MainPage from './components/MainPage';
 import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import "./components/auth/SignIn_Up.css"
+import "./components/Design.css"
 
 const App = () => {
   return (

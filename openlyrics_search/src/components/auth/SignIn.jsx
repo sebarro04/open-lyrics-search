@@ -27,7 +27,7 @@ const SignIn = () => {
 
   return (
     <div className="sign_in-container">
-      <form onSubmit={signIn} className="container">
+      <form onSubmit={signIn} className="formContainer">
         <h1 className="title">Iniciar Sesión</h1>
         <h3 className="text">Ingrese su correo</h3>
         <input
@@ -48,8 +48,8 @@ const SignIn = () => {
         <br></br>
         <h3 id="errorLogin" className="message">Error</h3>
         <br id="espace"></br>
-        <button type="submit" className="buttonLogin">Iniciar Sesión</button>
-        <button onClick={()=>navigate('/signUp')} className="buttonLogin">Registrarse</button>
+        <button type="submit" className="buttons">Iniciar Sesión</button>
+        <button onClick={()=>navigate('/signUp')} className="buttons">Registrarse</button>
       </form>
     </div>
   );
