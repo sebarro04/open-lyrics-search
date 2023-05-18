@@ -29,7 +29,7 @@ class Blobstorage:
     def download_blob(self, container_name: str, file_url: str) -> None:
         try:
             blob_client = self.blob_service_client.get_blob_client(container=container_name, blob=file_url)
-            with open(file=f'src/loader/tmp/{file_url}.csv', mode='wb') as blob:
+            with open(os.path.join(FILE_PATH, f'./temp-files/{file_url}'), mode='wb') as blob:
                 download_stream = blob_client.download_blob()
                 blob.write(download_stream.readall())
         except Exception as ex:
@@ -38,11 +38,11 @@ class Blobstorage:
         
     def delete_local_blob(self, filename: str) -> None:
         try:
-            os.remove(f'src/loader/tmp/{filename}')
+            os.remove(os.path.join(FILE_PATH, f'./temp-files/{filename}'))
         except Exception as ex:
             print('Error deleting the temporary file')
             return None
 
 if __name__ == '__main__':
     blob_client = Blobstorage()
-    print(blob_client.list_blobs_names('documents'))
+    blob_client.download_blob('documents', 'artists-data-2.csv')
