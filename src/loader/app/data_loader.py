@@ -7,8 +7,8 @@ def isfloat(num):
     except ValueError:
         return False
 
-def load_csv(filename: str) -> tuple[int, list] | None:
-    with open(filename, mode='r', encoding='utf8') as csv_file:
+def load_csv(file_path: str) -> tuple[int, list] | None:
+    with open(file_path, mode='r', encoding='utf8') as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         headers = csv_reader.fieldnames
         print(headers)
@@ -42,13 +42,13 @@ def load_csv(filename: str) -> tuple[int, list] | None:
             return 2, lyrics_data # 2 as flag to indicate lyrics
         raise Exception('Invalid csv format')
 
-def link_songs_with_artists(songs: list, artists: list) -> list:
+def link_lyrics_with_artists(lyrics: list, artists: list) -> list[dict]:
     linked_data = []
     for artist in artists:
-        for song in songs:
-            if artist['link'] == song['artist_link']:
-                song['artist'] = artist
-                linked_data.append(song)
+        for lyric in lyrics:
+            if artist['link'] == lyric['artist_link']:
+                lyric['artist'] = artist
+                linked_data.append(lyric)
     return linked_data
 
 if __name__ == '__main__':
