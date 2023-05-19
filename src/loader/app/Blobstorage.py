@@ -12,7 +12,8 @@ class Blobstorage:
             self.blob_service_client = BlobServiceClient(blobstorage_url, credential=blobstorage_key)
             print('Connection to blobstorage successful')
         except Exception as ex:
-            print(f'Error connecting to the blob service client: {ex}')
+            print(f'Error connecting to the blob service client')
+            raise
 
     def list_blobs_names(self, container_name: str) -> list | None:
         try:
@@ -42,4 +43,3 @@ class Blobstorage:
 
 if __name__ == '__main__':
     blob_client = Blobstorage()
-    blob_client.download_blob('documents', 'artists-data-2.csv')
