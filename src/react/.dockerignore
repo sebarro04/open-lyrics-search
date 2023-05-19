@@ -1,20 +1,2 @@
 openlyrics_search/node_modules
 openlyrics_search/.env.local
-openlyrics_search/.pnp
-openlyrics_search/.pnp.js
-openlyrics_search/
-openlyrics_search/# testing
-openlyrics_search/coverage
-openlyrics_search/
-openlyrics_search/# production
-openlyrics_search/build
-openlyrics_search/
-openlyrics_search/# misc
-openlyrics_search/.DS_Store
-openlyrics_search/.env.development.local
-openlyrics_search/.env.test.local
-openlyrics_search/.env.production.local
-openlyrics_search/
-openlyrics_search/npm-debug.log*
-openlyrics_search/yarn-debug.log*
-openlyrics_search/yarn-error.log*
