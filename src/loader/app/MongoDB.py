@@ -48,6 +48,5 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
-    for collection in mongodb.db.list_collections():
-        print(collection)
+    print(mongodb.read_processed_files())
     del mongodb

@@ -9,9 +9,8 @@ def isfloat(num):
 
 def load_csv(file_path: str) -> tuple[int, list] | None:
     with open(file_path, mode='r', encoding='utf8') as csv_file:
-        csv_reader = csv.DictReader(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_reader = csv.DictReader(csv_file, delimiter=',', quotechar='"')
         headers = csv_reader.fieldnames
-        print(headers)
         if 'Artist' in headers and 'Genres' in headers and 'Songs' in headers and 'Popularity' in headers and 'Link' in headers:
             artists_data = []
             for row in csv_reader:
@@ -53,4 +52,3 @@ def link_lyrics_with_artists(lyrics: list, artists: list) -> list[dict]:
 
 if __name__ == '__main__':
     print('data_loader')
-    #print(load_csv('src/loader/tmp/lyrics-data-2.csv')[1])

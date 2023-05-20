@@ -9,6 +9,7 @@ def main():
     print('Open Lyrics Search - Loader')
     blob_client = Blobstorage.Blobstorage()
     mongodb = MongoDB.MongoDB()
+    print('-----')
     available_files = blob_client.list_blobs_names('documents')    
     processed_files = mongodb.read_processed_files()
     files_to_process = []
@@ -23,29 +24,39 @@ def main():
     lyrics = []    
     download_path = os.path.join(FILE_PATH, './temp-files')
     for file in files_to_process:
-        print(f'Processing {file}')
+        print('-----')        
         blob_client.download_blob('documents', file, download_path)
         file_path = os.path.join(FILE_PATH, f'./temp-files/{file}')
+        print(f'Processing {file}')
         result = data_loader.load_csv(file_path)
         if (result[0] == 1):
-            artists.append(result[1])
+            artists += result[1]
         else:
-            lyrics.append(result[1])
+            lyrics += result[1]
         blob_client.delete_local_blob(file_path)
+        print(f'{file} processed')
+    print('-----') 
     linked_data = []
     if artists == [] or lyrics == []:
         print('Artists or lyrics data missing')
         return
+    print('Linking data')
     linked_data = data_loader.link_lyrics_with_artists(lyrics, artists)
     if linked_data == []:
         print('0 records were linked')
         return
+    print('-----') 
+    print('Uploading songs to Mongo Atlas')
     result = mongodb.create_songs(linked_data)
-    if isinstance(result, None):
+    if result == None:
         return
+    print('-----')
+    print('Uploading processed files to Mongo Atlas')
     mongodb.create_processed_files(files_to_process)
     del mongodb
     del blob_client
+    print('-----') 
+    print('All the files were processed')
     return
 
 if __name__ == '__main__':
