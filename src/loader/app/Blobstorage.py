@@ -5,7 +5,7 @@ from azure.storage.blob import BlobServiceClient
 class Blobstorage:
     def __init__(self):
         try:
-            blobstorage_url =config('BLOBSTORAGE_URL')
+            blobstorage_url = config('BLOBSTORAGE_URL')
             blobstorage_key = config('BLOBSTORAGE_KEY')
             self.blob_service_client = BlobServiceClient(blobstorage_url, credential=blobstorage_key)
             print('Connection to blobstorage successful')

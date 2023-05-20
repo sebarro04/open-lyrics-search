@@ -9,7 +9,7 @@ def main():
     print('Open Lyrics Search - Loader')
     blob_client = Blobstorage.Blobstorage()
     mongodb = MongoDB.MongoDB()
-    available_files = blob_client.list_blobs_names()    
+    available_files = blob_client.list_blobs_names('documents')    
     processed_files = mongodb.read_processed_files()
     files_to_process = []
     for file in available_files:
@@ -44,6 +44,8 @@ def main():
     if isinstance(result, None):
         return
     mongodb.create_processed_files(files_to_process)
+    del mongodb
+    del blob_client
     return
 
 if __name__ == '__main__':

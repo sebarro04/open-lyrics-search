@@ -1,14 +1,13 @@
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+from pymongo import MongoClient
 from decouple import config
 
 class MongoDB:
     def __init__(self):
         try:
             connection_string = config('MONGO_CONNECTION_STRING')
-            self.client = MongoClient(connection_string, serverSelectionTimeoutMS=10000, server_api=ServerApi('1'))
+            self.client = MongoClient(connection_string)
             self.client.server_info()
-            self.db = self.client['Cluster0']
+            self.db = self.client['open_lyrics_search']
             print('MongoDB connected')
         except Exception as ex:
             print(f'Error connecting to MongoDB')
@@ -49,3 +48,6 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
+    for collection in mongodb.db.list_collections():
+        print(collection)
+    del mongodb
