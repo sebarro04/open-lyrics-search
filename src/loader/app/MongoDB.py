@@ -16,20 +16,20 @@ class MongoDB:
     def __del__(self):
         self.client.close()
 
-    def create_processed_file(self, processed_file: dict) -> str | None:
+    def create_processed_files(self, processed_files: list[dict]) -> list | None:
         try:
             collection = self.db['processed_files']
-            result = collection.insert_one(processed_file)
-            return str(result.inserted_id)
+            result = collection.insert_many(processed_files)
+            return result.inserted_ids
         except Exception as ex:
             print(f'Error creating the processed files in the processed files collection: {ex}')
             return None
         
-    def create_song(self, song: dict) -> str | None:
+    def create_songs(self, songs: list[dict]) -> list | None:
         try:
             collection = self.db['songs']
-            result = collection.insert_one(song)
-            return str(result.inserted_id)
+            result = collection.insert_many(songs)
+            return result.inserted_ids
         except Exception as ex:
             print(f'Error creating the song in the collection songs: {ex}')
             return None

@@ -2,11 +2,17 @@ import os
 import data_loader
 import Blobstorage
 import MongoDB
+import speedtest
 
 FILE_PATH = os.path.dirname(os.path.abspath(__file__)) # set absolute path to .py
 
 def main():
+    st = speedtest.Speedtest()    
     print('Open Lyrics Search - Loader')
+    print('-----')
+    print(f'Download speed Mbps: {round(st.download() / 1000 / 1000, 1)}')
+    print(f'Upload speed Mbps: {round(st.upload() / 1000 / 1000, 1)}')
+    print('-----')
     blob_client = Blobstorage.Blobstorage()
     mongodb = MongoDB.MongoDB()
     print('-----')
@@ -46,18 +52,31 @@ def main():
         print('0 records were linked')
         return
     print('-----') 
-    print('Uploading songs to Mongo Atlas')
-    for song in songs:
-        result = mongodb.create_song(song)
-        if result == None:
-            return
+    print(f'Uploading {len(songs)} songs to Mongo Atlas')
+    while songs != []:
+        try:
+            result = mongodb.create_songs(songs[:100_000])
+            if result == None:
+                return
+            songs = songs[100_000:]
+        except:
+            result = mongodb.create_songs(songs)
+            if result == None:
+                return
+            songs = []            
     print('-----')
     print('Uploading processed files to Mongo Atlas')
-    for processed_file in files_to_process:
-        temp = {'filename': processed_file}
-        result = mongodb.create_processed_file(temp)
-        if result == None:
-            return
+    while files_to_process != []:
+        try:
+            result = mongodb.create_processed_files(files_to_process[:100_000])
+            if result == None:
+                return
+            files_to_process = files_to_process[100_000:]
+        except:
+            result = mongodb.create_processed_files(files_to_process)
+            if result == None:
+                return
+            files_to_process = []
     del mongodb
     del blob_client
     print('-----') 
