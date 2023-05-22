@@ -54,7 +54,8 @@ def main():
     print('-----')
     print('Uploading processed files to Mongo Atlas')
     for processed_file in files_to_process:
-        result = mongodb.create_processed_file(processed_file)
+        temp = {'filename': processed_file}
+        result = mongodb.create_processed_file(temp)
         if result == None:
             return
     del mongodb
