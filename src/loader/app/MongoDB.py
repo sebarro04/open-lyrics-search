@@ -16,22 +16,22 @@ class MongoDB:
     def __del__(self):
         self.client.close()
 
-    def create_processed_files(self, data: list[dict]) -> str | None:
+    def create_processed_file(self, processed_file: dict) -> str | None:
         try:
             collection = self.db['processed_files']
-            result = collection.insert_many(data)
-            return result.inserted_ids
+            result = collection.insert_one(processed_file)
+            return str(result.inserted_id)
         except Exception as ex:
             print(f'Error creating the processed files in the processed files collection: {ex}')
             return None
         
-    def create_songs(self, data: list[dict]) -> list | None:
+    def create_song(self, song: dict) -> str | None:
         try:
             collection = self.db['songs']
-            result = collection.insert_many(data)
-            return result.inserted_ids
+            result = collection.insert_one(song)
+            return str(result.inserted_id)
         except Exception as ex:
-            print(f'Error creating the songs in the collection songs: {ex}')
+            print(f'Error creating the song in the collection songs: {ex}')
             return None
         
     def read_processed_files(self) -> list[str] | None:
@@ -48,5 +48,5 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
-    print(mongodb.read_processed_files())
+    #mongodb.db['songs'].delete_many({'artist.name': {'$not': {'$eq': '$uicideboy$'}}})
     del mongodb

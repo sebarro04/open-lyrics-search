@@ -36,23 +36,27 @@ def main():
         blob_client.delete_local_blob(file_path)
         print(f'{file} processed')
     print('-----') 
-    linked_data = []
+    songs = []
     if artists == [] or lyrics == []:
         print('Artists or lyrics data missing')
         return
     print('Linking data')
-    linked_data = data_loader.link_lyrics_with_artists(lyrics, artists)
-    if linked_data == []:
+    songs = data_loader.link_lyrics_with_artists(lyrics, artists)
+    if songs == []:
         print('0 records were linked')
         return
     print('-----') 
     print('Uploading songs to Mongo Atlas')
-    result = mongodb.create_songs(linked_data)
-    if result == None:
-        return
+    for song in songs:
+        result = mongodb.create_song(song)
+        if result == None:
+            return
     print('-----')
     print('Uploading processed files to Mongo Atlas')
-    mongodb.create_processed_files(files_to_process)
+    for processed_file in files_to_process:
+        result = mongodb.create_processed_file(processed_file)
+        if result == None:
+            return
     del mongodb
     del blob_client
     print('-----') 
