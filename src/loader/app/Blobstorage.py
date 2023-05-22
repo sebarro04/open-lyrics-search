@@ -8,7 +8,7 @@ class Blobstorage:
             blobstorage_url = config('BLOBSTORAGE_URL')
             blobstorage_key = config('BLOBSTORAGE_KEY')
             self.blob_service_client = BlobServiceClient(blobstorage_url, credential=blobstorage_key)
-            print('Connection to blobstorage successful')
+            print('Blobstorage connected')
         except Exception as ex:
             print(f'Error connecting to the blob service client')
             raise
