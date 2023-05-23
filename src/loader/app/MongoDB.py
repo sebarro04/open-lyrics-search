@@ -48,5 +48,4 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
-    #mongodb.db['songs'].delete_many({'artist.name': {'$not': {'$eq': '$uicideboy$'}}})
     del mongodb

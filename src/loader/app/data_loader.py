@@ -52,9 +52,3 @@ def link_lyrics_with_artists(lyrics: list, artists: list) -> list[dict]:
 
 if __name__ == '__main__':
     print('data_loader')
-    tmp = [1,2,3,4,5]
-    while tmp != []:
-        print(tmp[:1])
-        print(tmp[1:])
-        tmp = tmp[1:]
-

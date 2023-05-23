@@ -54,29 +54,20 @@ def main():
     print('-----') 
     print(f'Uploading {len(songs)} songs to Mongo Atlas')
     while songs != []:
-        try:
-            result = mongodb.create_songs(songs[:100_000])
-            if result == None:
-                return
-            songs = songs[100_000:]
-        except:
-            result = mongodb.create_songs(songs)
-            if result == None:
-                return
-            songs = []            
+        result = mongodb.create_songs(songs[:100_000])
+        if result == None:
+            return
+        songs = songs[100_000:]     
+    processed_files = []
+    for file in files_to_process:
+        processed_files.append({'filename': file})
     print('-----')
-    print('Uploading processed files to Mongo Atlas')
-    while files_to_process != []:
-        try:
-            result = mongodb.create_processed_files(files_to_process[:100_000])
-            if result == None:
-                return
-            files_to_process = files_to_process[100_000:]
-        except:
-            result = mongodb.create_processed_files(files_to_process)
-            if result == None:
-                return
-            files_to_process = []
+    print(f'Uploading {len(processed_files)} processed files to Mongo Atlas')
+    while processed_files != []:
+        result = mongodb.create_processed_files(processed_files[:100_000])
+        if result == None:
+            return
+        processed_files = processed_files[100_000:]
     del mongodb
     del blob_client
     print('-----') 
