@@ -1,16 +1,31 @@
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+import pymongo
+import dns
+
+client = pymongo.MongoClient("mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/")
+result = client['open_lyrics_search']['songs'].aggregate([
+    {
+        '$search': {
+            'index': 'default',
+            'text': {
+                'query': "Fim de baile, fim de noite",
+                'path': 'lyric'
+            }
+        }
+    }, {
+        '$limit': 5
+    },
+    {
+        '$project': {
+            '_id': 1,
+            'song_name': 1,
+            'lyric': 1
+        }
+    }
+])
+
+for i in result:
+
+    print(i)
+    print("\n"+"\n")
 
 
-if __name__ == '__main__':
-    # Replace the placeholder with your Atlas connection string
-    uri = "mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/"
-    # Set the Stable API version when creating a new client
-    client = MongoClient(uri, server_api=ServerApi('1'))
-                            
-    # Send a ping to confirm a successful connection
-    try:
-        client.admin.command('ping')
-        print("Pinged your deployment. You successfully connected to MongoDB!")
-    except Exception as exeption:
-        print(exeption)
