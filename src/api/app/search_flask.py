@@ -4,7 +4,7 @@ import search
 
 SEARCH_BLUEPRINT = Blueprint('SEARCH_BLUEPRINT', __name__)
 
-@SEARCH_BLUEPRINT.route('/eduhub/search/<song_id>', methods = ['GET'])
+@SEARCH_BLUEPRINT.route('/openlyrics/search/<song_id>', methods = ['GET'])
 def search_id(song_id):
     result = search.search_id(song_id)
     if isinstance(result, Exception):
