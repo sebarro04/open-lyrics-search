@@ -8,8 +8,10 @@ const MainPage = () => {
   const [name, setName] = useState("");
   const [language, setLanguage] = useState("");
   const [musicalGenre, setMusicalGenre] = useState("");
-  const [popularity, setPopularity] = useState("");
-  const [totalSongs, setTotalSongs] = useState("");
+  const [maxPopularity, setMaxPopularity] = useState("");
+  const [minPopularity, setMinPopularity] = useState("");
+  const [maxTotalSongs, setMaxTotalSongs] = useState("");
+  const [minTotalSongs, setMinTotalSongs] = useState("");
 
   const userSignOut = () => {
     signOut(auth)
@@ -21,17 +23,11 @@ const MainPage = () => {
 
   const navigate = useNavigate();
 
-  const songOptions = [
+  /*const songOptions = [
     { value: "default", label: "" },
     { value: "most", label: "Con más canciones primero" },
     { value: "least", label: "Con menos canciones primero" },
-  ];
-
-  const popularityOptions = [
-    { value: "default", label: "" },
-    { value: "most", label: "Más popular primero" },
-    { value: "least", label: "Menos popular primero" },
-  ];
+  ];*/
 
   const filters = () => {
     const formFacets = document.getElementById('facets');
@@ -40,13 +36,11 @@ const MainPage = () => {
 
   return (
     <div className="main_page-container">
-      <div className="facets-container">
-        <form  className="formContainer">
-          <h3 className="text">Canción</h3>
+        <form  className="formSearch">
+          <h3 className="text">OpenLyrics Search</h3>
           <input
             className="textBox"
             type="text"
-            placeholder="Nombre de la canción"
             value={song}
             onChange={(e) => setSong(e.target.value)}
           ></input>
@@ -54,6 +48,7 @@ const MainPage = () => {
 
           <button type="button" className="buttons" onClick={filters}>Filtros</button>
         </form>
+        
         <form id="facets" className="formFacets">
           <h3 className="text">Nombre del artista</h3>
           <input
@@ -80,18 +75,36 @@ const MainPage = () => {
             onChange={(e) => setMusicalGenre(e.target.value)}
           ></input>
           <h3 className="text">Popularidad</h3>
-          <select
-            className="comboBox"
-            value={popularity}
-            onChange={(e) => setPopularity(e.target.value)}>
-            {popularityOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <input
+            className="textBox"
+            type="text"
+            placeholder="Máximo de vistas"
+            value={maxPopularity}
+            onChange={(e) => setMaxPopularity(e.target.value)}
+          ></input>
+          <input
+            className="textBox"
+            type="text"
+            placeholder="Mínimo de vistas"
+            value={minPopularity}
+            onChange={(e) => setMinPopularity(e.target.value)}
+          ></input>
           <h3 className="text">Total de canciones</h3>
-          <select
+          <input
+            className="textBox"
+            type="text"
+            placeholder="Máximo de canciones"
+            value={maxTotalSongs}
+            onChange={(e) => setMaxTotalSongs(e.target.value)}
+          ></input>
+          <input
+            className="textBox"
+            type="text"
+            placeholder="Mínimo de canciones"
+            value={minTotalSongs}
+            onChange={(e) => setMinTotalSongs(e.target.value)}
+          ></input>
+          {/* <select
             className="comboBox"
             value={totalSongs}
             onChange={(e) => setTotalSongs(e.target.value)}>
@@ -100,9 +113,8 @@ const MainPage = () => {
                 {option.label}
               </option>
             ))}
-          </select>
+          </select> */}
         </form>
-        </div>
       <form  className="formSongs">
         <h1 className="text">Resultados</h1>
       </form>
