@@ -1,42 +1,43 @@
 import os
 from decouple import config
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient
 
 class Blobstorage:
     def __init__(self):
         try:
-            blobstorage_url =config('BLOBSTORAGE_URL')
+            blobstorage_url = config('BLOBSTORAGE_URL')
             blobstorage_key = config('BLOBSTORAGE_KEY')
             self.blob_service_client = BlobServiceClient(blobstorage_url, credential=blobstorage_key)
-            print('Connection to blobstorage successful')
+            print('Blobstorage connected')
         except Exception as ex:
-            print('Error connecting to the blob service client')
+            print(f'Error connecting to the blob service client')
+            raise
 
-    def list_blobs_names(self, container_name: str) -> list:
+    def list_blobs_names(self, container_name: str) -> list[str] | None:
         try:
             container_client = self.blob_service_client.get_container_client(container=container_name)
             return [x for x in container_client.list_blob_names()]
         except Exception as ex:
-            print(ex)
-            return Exception('Error listing the blobs names')
+            print(f'Error listing the blobs names: {ex}')
+            return None
     
-    def download_blob(self, container_name: str, file_url: str) -> None | Exception:
+    def download_blob(self, container_name: str, file_url: str, download_path: str) -> None:
         try:
             blob_client = self.blob_service_client.get_blob_client(container=container_name, blob=file_url)
-            with open(file='src/loader/tmp/tmp.csv', mode='wb') as blob:
+            with open(os.path.join(download_path, file_url), mode='wb') as blob:
                 download_stream = blob_client.download_blob()
                 blob.write(download_stream.readall())
+            print(f'{file_url} downloaded')
         except Exception as ex:
-            print(ex)
-            return Exception('Error downloading the blob')
+            print(f'Error downloading the blob: {ex}')
+            return None
         
-    def delete_temporary_blob(self) -> None | Exception:
+    def delete_local_blob(self, file_path: str) -> None:
         try:
-            os.remove('src/loader/tmp/tmp.csv')
+            os.remove(file_path)
         except Exception as ex:
-            print(ex)
-            return Exception('Error deleting the temporary file')
+            print(f'Error deleting the temporary file: {ex}')
+            return None
 
 if __name__ == '__main__':
     blob_client = Blobstorage()
-    print(blob_client.list_blobs_names('documents'))
