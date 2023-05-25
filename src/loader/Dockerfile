@@ -1,13 +1,14 @@
 FROM python:3.10.7-slim-bullseye
 
-EXPOSE 5000
-
 WORKDIR /app
 
 COPY app/. .
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-#RUN python -u tests.py
-#RUN rm .env
+RUN python -u TestDataLoader.py
+RUN rm TestDataLoader.py
+RUN rm .env
 
-CMD ["python3", "./loader.py"]
+RUN mkdir temp-files
+
+CMD ["python", "-u", "__init__.py"]

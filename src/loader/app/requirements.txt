@@ -1,0 +1,4 @@
+azure-storage-blob
+python-decouple
+pymongo
+speedtest-cli
