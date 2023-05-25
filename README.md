@@ -56,6 +56,18 @@ env {
 
 ### Loader
 
+1. Abrir una terminal.
+2. Ir al directorio **src/loader**.
+3. Ejecutar el comando `.\build.bat`.
+
+### API
+
+### React App
+
+## Guía De Uso
+
+### Loader
+
 1. Iniciar sesión en [Azure](https://azure.microsoft.com/es-es/get-started/azure-portal).
 2. Entrar al storage account creado con la infraestructura.
 3. Entrar en el apartado **containers**.
@@ -66,19 +78,7 @@ env {
         * La entrada de Lyric de cada canción debe ir entre doble comilla ("").
 6. Abrir una terminal.
 7. Ir al directorio **src/loader**.
-8. Ejecutar el comando `.\build.bat`.
-
-### API
-
-### React App
-
-## Guía De Uso
-
-### Loader
-
-1. Abrir una terminal.
-2. Ir al directorio **src/loader**.
-3. Ejecutar el comando `docker compose up` o `docker compose up -d` si no se desea ver los logs de los contenedores en la terminal.
+8. Ejecutar el comando `docker compose up` o `docker compose up -d` si no se desea ver los logs de los contenedores en la terminal.
 
 ### API
 
