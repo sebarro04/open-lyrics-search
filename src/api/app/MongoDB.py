@@ -1,11 +1,12 @@
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from decouple import config
 
+mongo_db_uri = config("MONGO_DB_URI")
 
 class MongoDB:
     def __init__(self):
-        self.client = MongoClient("mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/", server_api=ServerApi('1'))
+        self.client = MongoClient(mongo_db_uri, server_api=ServerApi('1'))
         try:
             self.client.admin.command('ping')
             print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -13,11 +14,12 @@ class MongoDB:
             print(exeption)
 
     # Try to close the connection 
-    # def __del__(self):
-    #     try:
-    #         self.client.close()
-    #     except Exception as ex:
-    #         print(ex)
+    def __del__(self):
+        try:
+            self.client.close()
+        except Exception as ex:
+            print(ex)
 
 if __name__ == '__main__':
     db = MongoDB()
+    

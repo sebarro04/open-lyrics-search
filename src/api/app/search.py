@@ -1,8 +1,7 @@
 from MongoDB import MongoDB
-from pymongo import MongoClient
 from bson import ObjectId
 
-def search_id(song_id) -> int | Exception:
+def search_song__by_id(song_id) -> int | Exception:
     try:
         db = MongoDB()
         songs_collection = db.client['open_lyrics_search']['songs']  
@@ -16,4 +15,4 @@ def search_id(song_id) -> int | Exception:
     
 
 if __name__ == '__main__':
-    print(search_id('646c1870246a303032cea3c5'))
+    print(search_song__by_id('646c1870246a303032cea3c5'))
