@@ -55,7 +55,7 @@
 
 ### Loader
 
-El loader fue probado con 4 archivos, los 2 archivos fuente y 2 archivos creados por el equipo. Esto se hizo con la intención de comprobar que el loader funcionara con más archivos a los suministrados.
+El loader fue probado con 4 archivos, los 2 archivos fuente y 2 archivos creados por el equipo. Esto se hizo con la intención de comprobar que el loader funcionara con más archivos de los suministrados.
 
 ### API
 
