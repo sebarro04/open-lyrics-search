@@ -29,6 +29,31 @@
 
 ### Infraestructura Azure
 
+1. Abrir una terminal.
+2. Ejecutar el comando `az login --use-device-code` para iniciar sesión con Azure CLI.
+3. Abrir el archivo **src/infrastructure/conf/group.tfvars**.
+4. Establecer un nombre para el grupo sin caracteres especiales, espacios o mayusculas.
+5. Abrir el archivo **src/infrastructure/container_services.tf**.
+6. En el key **app_settings** se deben agregar las variables de entorno que vaya a necesitar el app service de la siguiente forma:
+
+```terraform
+"ENV_EXAMPLE" = "VALUE"
+```
+
+7. Abrir el archivo **src/infrastructure/container_app.tf**.
+8. En el key **template.container** se deben agregar las variables de entorno que vaya a necesitar el container app de la siguiente forma (c/u):
+
+```terraform
+env {
+    name = "ENV_EXAMPLE"
+    value = "VALUE"
+}
+```
+
+9. Ir al directorio **src/infrastructure**.
+10. Ejecutar el comando `.\build.bat`.
+    * Si se desea eliminar la infraestructura se debe ejecutar el comando `.\destroy.bat`.
+
 ### Loader
 
 1. Abrir una terminal.
