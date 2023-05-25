@@ -22,7 +22,7 @@
   .main_page-container {
     display: flex;
     justify-content: center;
-    height: 145vh;
+    height: 150vh;
     background-image: url('../../public/backgroundLogin.jpg');
     background-size: cover;
     background-position: center;
@@ -109,6 +109,17 @@
     margin-top: 10px;
     color: #555;
   }
+
+  .filterText {
+    margin-top: 10px;
+    color: #555;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .filterText:hover {
+    color: rgb(53, 44, 44); /* Choose the desired highlight color */
+  }
   
   .textBox {
     width: 278px;
@@ -162,7 +173,8 @@
     display: none;
     color: #c43838;
   }
-  
+
+
   
 
   

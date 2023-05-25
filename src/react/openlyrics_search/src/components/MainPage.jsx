@@ -34,6 +34,49 @@ const MainPage = () => {
     formFacets.style.display = formFacets.style.display === 'none' ? 'block' : 'none';
   };  
 
+  const listLanguage = [
+    { number: 100, label: "Inglés" },
+    { number: 50, label: "Español" },
+    { number: 30, label: "Francés" },
+  ];
+
+  const listMusicalGenre = [
+    { number: 100, label: "Rock" },
+    { number: 50, label: "Pop" },
+    { number: 30, label: "Jazz" },
+  ];
+
+  const CheckboxChangeLanguage = (value) => {
+    if (language.includes(value)) {
+      // Remueve el valor si ya lo contiene
+      setLanguage(language.filter((lang) => lang !== value));
+    } else {
+      // Agrega el valor si no lo contiene
+      setLanguage([...language, value]);
+    }
+  };
+
+  const CheckboxChangeMusicalGenre = (value) => {
+    if (musicalGenre.includes(value)) {
+      // Remueve el valor si ya lo contiene
+      setMusicalGenre(musicalGenre.filter((musGe) => musGe !== value));
+    } else {
+      // Agrega el valor si no lo contiene
+      setMusicalGenre([...musicalGenre, value]);
+    }
+  };
+
+  const [showOptionsLanguage, setShowOptionsLanguage] = useState(false);
+  const [showOptionsMusicalGenre, setShowOptionsMusicalGenre] = useState(false);
+
+  const ToggleOptionsLanguage = () => {
+    setShowOptionsLanguage(!showOptionsLanguage);
+  };
+
+  const ToggleOptionsMusicalGenre = () => {
+    setShowOptionsMusicalGenre(!showOptionsMusicalGenre);
+  };
+
   return (
     <div className="main_page-container">
         <form  className="formSearch">
@@ -58,22 +101,60 @@ const MainPage = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></input>
-          <h3 className="text">Idioma</h3>
-          <input
-            className="textBox"
-            type="text"
-            placeholder="Idioma"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          ></input>
-          <h3 className="text">Género Musical</h3>
-          <input
-            className="textBox"
-            type="text"
-            placeholder="Género Musical"
-            value={musicalGenre}
-            onChange={(e) => setMusicalGenre(e.target.value)}
-          ></input>
+          <h3 className="filterText" onClick={ToggleOptionsLanguage}>
+            Idioma
+          </h3>
+          {showOptionsLanguage && (
+            <div>
+              {listLanguage.map((option) => (
+                <div key={option.label} className="checkbox-option">
+                  <label>
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      value={option.label}
+                      checked={language.includes(option.label)}
+                      onChange={(e) => CheckboxChangeLanguage(e.target.value)}
+                    />
+                    <span className="option-content">
+                      <span className="option-label">{option.label}</span>
+                      <span className="number" style={{ float: 'right' }}>
+                        {option.number}
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <h3 className="filterText" onClick={ToggleOptionsMusicalGenre}>
+            Género Musical
+          </h3>
+          {showOptionsMusicalGenre && (
+            <div>
+              {listMusicalGenre.map((option) => (
+                <div key={option.label} className="checkbox-option">
+                  <label>
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      value={option.label}
+                      checked={musicalGenre.includes(option.label)}
+                      onChange={(e) => CheckboxChangeMusicalGenre(e.target.value)}
+                    />
+                    <span className="option-content">
+                      <span className="option-label">{option.label}</span>
+                      <span className="number" style={{ float: 'right' }}>
+                        {option.number}
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
+
           <h3 className="text">Popularidad</h3>
           <input
             className="textBox"
