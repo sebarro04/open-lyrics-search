@@ -56,9 +56,17 @@ env {
 
 ### Loader
 
-1. Abrir una terminal.
-2. Ir al directorio **src/loader**.
-3. Ejecutar el comando `.\build.bat`.
+1. Iniciar sesión en [Azure](https://azure.microsoft.com/es-es/get-started/azure-portal).
+2. Entrar al storage account creado con la infraestructura.
+3. Entrar en el apartado **containers**.
+4. Entrar a **documents**.
+5. Subir manualmente los archivos que serán procesados por el loader.
+    * Los archivos de artistas deben ser un **.csv** y deben tener como header **Artist,Genres,Songs,Popularity,Link**
+    * Los archivos de letras deben ser un **.csv** y deben tener como header **ALink,SName,SLink,Lyric,language**
+        * La entrada de Lyric de cada canción debe ir entre doble comilla ("").
+6. Abrir una terminal.
+7. Ir al directorio **src/loader**.
+8. Ejecutar el comando `.\build.bat`.
 
 ### API
 
