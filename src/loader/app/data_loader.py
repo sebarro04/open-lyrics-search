@@ -1,6 +1,6 @@
 import csv
 
-def isfloat(num):
+def is_num(num: str) -> bool:
     try:
         float(num)
         return True
@@ -23,7 +23,7 @@ def load_csv(file_path: str) -> tuple[int, list] | None:
                 # data transform
                 if (row['songs'].isnumeric()):
                     row['songs'] = int(row['songs'])  
-                if (isfloat(row['popularity'])):
+                if (is_num(row['popularity'])):
                     row['popularity'] = float(row['popularity'])
                 row['genres'] = row['genres'].split(';')
                 artists_data.append(row)

@@ -4,7 +4,7 @@ import Blobstorage
 import MongoDB
 import speedtest
 
-FILE_PATH = os.path.dirname(os.path.abspath(__file__)) # set absolute path to .py
+CURRENT_FILE_PATH = os.path.dirname(os.path.abspath(__file__)) # set absolute path to .py
 
 def main():
     st = speedtest.Speedtest()    
@@ -28,11 +28,11 @@ def main():
     print(f'{len(files_to_process)} files to process')
     artists = []
     lyrics = []    
-    download_path = os.path.join(FILE_PATH, './temp-files')
+    download_path = os.path.join(CURRENT_FILE_PATH, './temp-files')
     for file in files_to_process:
         print('-----')        
         blob_client.download_blob('documents', file, download_path)
-        file_path = os.path.join(FILE_PATH, f'./temp-files/{file}')
+        file_path = os.path.join(CURRENT_FILE_PATH, f'./temp-files/{file}')
         print(f'Processing {file}')
         result = data_loader.load_csv(file_path)
         if (result[0] == 1):
