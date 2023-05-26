@@ -2,7 +2,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from decouple import config
 
-mongo_db_uri = config("MONGO_DB_URI")
+uri = config("MONGODB_URI")
 
 class MongoDB:
     def __init__(self):

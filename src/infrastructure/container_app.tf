@@ -36,25 +36,9 @@ template {
       cpu    = "0.25"
       memory = "0.5Gi"
       env {
-        name  = "ENV1"
-        value = "VAL1"
+        name  = "MONGODB_URI"
+        value = "mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/"
       }
-      env {
-        name  = "ENV2"
-        value = "VAL2"
-      }
-#      liveness_probe {
-#        port      = 5000
-#        timeout   = 5
-#        transport = "HTTP"
-#      }
-
-#      readiness_probe {
-#        port      = 5000
-#        timeout   = 5
-#        transport = "HTTP"
-#      }
-
     }
   }
 
