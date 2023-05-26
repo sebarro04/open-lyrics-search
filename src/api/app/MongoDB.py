@@ -20,7 +20,7 @@ class MongoDB:
         except Exception as ex:
             print(ex)
 
-    def read_song_by_id(self, id: str) -> int | Exception:
+    def read_song_by_id(self, id: str) -> dict | Exception:
         try:
             collection = self.client['open_lyrics_search']['songs']
             query = { '_id': ObjectId(id) }
