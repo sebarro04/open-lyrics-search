@@ -30,8 +30,72 @@ class MongoDB:
         except Exception as ex:
             print(ex)
             return Exception('Can not read the song by id')
-
+    
+    def search_songs(self, query: list) -> list | Exception:
+        try:
+            term_to_search = query[0]
+            filters = ["artist.genres", "artist.name"]
+            pipeline = [
+                            {
+                                '$search': {
+                                    'index': 'test', 
+                                    'compound': {
+                                        'must': [
+                                            {
+                                                'text': {
+                                                    'query': term_to_search, 
+                                                    'path': 'lyric'
+                                                }
+                                            }
+                                        ], 
+                                        'filter': [
+                                            
+                                        ]
+                                    }, 
+                                    'highlight': {
+                                        'path': {
+                                            'wildcard': '*'
+                                        }
+                                    }
+                                }
+                            }, 
+                            {
+                                '$limit': 5
+                            },
+                            {
+                                '$project': {
+                                    '_id': 1, 
+                                    'song_name': 1, 
+                                    'highlights': {
+                                        '$meta': 'searchHighlights'
+                                    }
+                                }
+                            }
+                        ]
+            posicion = 0
+            for i in filters:
+                if query[posicion + 1] == "null":
+                    posicion = posicion + 1
+                else: 
+                    pipeline[0]["$search"]["compound"]["filter"].append({
+                        "text": {
+                            "query": query[posicion + 1],
+                            "path": filters[posicion],
+                        },
+                    })
+                    posicion = posicion + 1
+            collection = self.client['open_lyrics_search']['songs']
+            result = collection.aggregate(pipeline)
+            return result
+        except Exception as ex:
+            print(ex)
+            return ex
+    
 if __name__ == '__main__':
     mongodb = MongoDB()
+    list = mongodb.search_songs(["full metal jacket kinda heavy", "Rap", "$uicideboy$"])
+    for doc in list:
+        print (doc)
+        print ("\n")
     del mongodb
     
