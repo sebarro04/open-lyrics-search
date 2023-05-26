@@ -1,25 +1,38 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from bson import ObjectId
 from decouple import config
 
-uri = config("MONGODB_URI")
+mongodb_connection_string = config("MONGODB_URI")
 
 class MongoDB:
     def __init__(self):
-        self.client = MongoClient(mongo_db_uri, server_api=ServerApi('1'))
+        self.client = MongoClient(mongodb_connection_string, server_api=ServerApi('1'))
         try:
             self.client.admin.command('ping')
             print("Pinged your deployment. You successfully connected to MongoDB!")
         except Exception as exeption:
             print(exeption)
-
-    # Try to close the connection 
+             
     def __del__(self):
         try:
             self.client.close()
         except Exception as ex:
             print(ex)
 
+    def read_song_by_id(self, id: str) -> int | Exception:
+        try:
+            collection = self.client['open_lyrics_search']['songs']
+            query = { '_id': ObjectId(id) }
+            result = collection.find_one(query)
+            result['_id'] = str(result['_id'])
+            return result
+        except Exception as ex:
+            print(ex)
+            return Exception('Can not read the song by id')
+
 if __name__ == '__main__':
-    db = MongoDB()
+    mongodb = MongoDB()
+    print(mongodb.read_song_by_id('646c18b2246a303032d0d0c9'))
+    del mongodb
     

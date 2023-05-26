@@ -5,6 +5,8 @@ EXPOSE 5000
 WORKDIR /app
 
 COPY app/. .
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python3", "./__init__.py"]
+RUN rm .env
+
+CMD ["python", "-u", "__init__.py"]
