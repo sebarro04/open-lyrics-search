@@ -33,6 +33,5 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
-    print(mongodb.read_song_by_id('646c18b2246a303032d0d0c9'))
     del mongodb
     
