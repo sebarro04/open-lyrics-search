@@ -20,11 +20,11 @@ class TestDataLoader(unittest.TestCase):
     def test_load_artists_csv(self):
         data = [
             ['Artist','Genres','Songs','Popularity','Link'],
-            ['$uicideboy$','Rap','300','5.0','/suicideboys/']
+            ['$uicideboy$','Rap; Hip Hop','300','5.0','/suicideboys/']
         ]
         file_path = os.path.join(CURRENT_FILE_PATH, './temp.csv')
         self.write_temp_csv(file_path, data)      
-        result = [{'name': '$uicideboy$', 'genres': ['Rap'], 'songs': 300, 'popularity': 5.0, 'link': '/suicideboys/'}]
+        result = [{'name': '$uicideboy$', 'genres': ['Rap', 'Hip Hop'], 'songs': 300, 'popularity': 5.0, 'link': '/suicideboys/'}]
         self.assertEqual(data_loader.load_csv(file_path)[1], result, 'Artists csv is not loading correctly')
         os.remove(file_path)
 
