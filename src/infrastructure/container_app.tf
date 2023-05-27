@@ -32,7 +32,7 @@ template {
     min_replicas = 0
     container {
       name   = "api-songsearch"
-      image  = "geraldnc88/api-songsearch:latest"
+      image  = "sebarro04/api-open-lyrics-search:latest"
       cpu    = "0.25"
       memory = "0.5Gi"
       env {

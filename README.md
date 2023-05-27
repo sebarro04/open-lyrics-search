@@ -56,9 +56,11 @@ env {
 
 ### Loader
 
-1. Abrir una terminal.
-2. Ir al directorio **src/loader**.
-3. Ejecutar el comando `.\build.bat`.
+1. Abrir el archivo **src/loader/app/.env**.
+2. Agregar las variables de entorno necesarias para que la aplicación funcione.
+3. Abrir una terminal.
+4. Ir al directorio **src/loader**.
+5. Ejecutar el comando `.\build.bat`.
 
 ### API
 
