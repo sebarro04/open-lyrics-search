@@ -1,11 +1,11 @@
 import { signOut } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase/firebaseConfig";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const MainPage = () => {
   const [song, setSong] = useState("");
-  const [name, setName] = useState("");
+  const [artist, setArtist] = useState("");
   const [language, setLanguage] = useState("");
   const [musicalGenre, setMusicalGenre] = useState("");
   const [maxPopularity, setMaxPopularity] = useState("");
@@ -22,17 +22,24 @@ const MainPage = () => {
   };
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  /*const songOptions = [
-    { value: "default", label: "" },
-    { value: "most", label: "Con más canciones primero" },
-    { value: "least", label: "Con menos canciones primero" },
-  ];*/
+  useEffect(() => {
+    if (location.state && location.state.song) {
+      setSong(location.state.song);
+    }
+  }, [location.state]);
 
   const filters = () => {
     const formFacets = document.getElementById('facets');
     formFacets.style.display = formFacets.style.display === 'none' ? 'block' : 'none';
-  };  
+  }; 
+
+  const listArtist = [
+    { number: 100, label: "Aretha Franklin" },
+    { number: 50, label: "Ray Charles" },
+    { number: 30, label: "Elvis Presley" },
+  ];
 
   const listLanguage = [
     { number: 100, label: "Inglés" },
@@ -45,6 +52,16 @@ const MainPage = () => {
     { number: 50, label: "Pop" },
     { number: 30, label: "Jazz" },
   ];
+
+  const CheckboxChangeArtist = (value) => {
+    if (artist.includes(value)) {
+      // Remueve el valor si ya lo contiene
+      setArtist(artist.filter((art) => art !== value));
+    } else {
+      // Agrega el valor si no lo contiene
+      setArtist([...artist, value]);
+    }
+  };
 
   const CheckboxChangeLanguage = (value) => {
     if (language.includes(value)) {
@@ -66,8 +83,13 @@ const MainPage = () => {
     }
   };
 
+  const [showOptionsArtist, setShowOptionsArtist] = useState(false);
   const [showOptionsLanguage, setShowOptionsLanguage] = useState(false);
   const [showOptionsMusicalGenre, setShowOptionsMusicalGenre] = useState(false);
+
+  const ToggleOptionsArtist = () => {
+    setShowOptionsArtist(!showOptionsArtist);
+  };
 
   const ToggleOptionsLanguage = () => {
     setShowOptionsLanguage(!showOptionsLanguage);
@@ -87,20 +109,39 @@ const MainPage = () => {
             value={song}
             onChange={(e) => setSong(e.target.value)}
           ></input>
-          <button type="button" className="buttons">Buscar</button>
+          <button onClick={() => { navigate('/detailsPage'); }} type="button" className="buttons">Buscar</button>
 
           <button type="button" className="buttons" onClick={filters}>Filtros</button>
         </form>
         
         <form id="facets" className="formFacets">
-          <h3 className="text">Nombre del artista</h3>
-          <input
-            className="textBox"
-            type="text"
-            placeholder="Nombre del artista"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          ></input>
+        <h3 className="filterText" onClick={ToggleOptionsArtist}>
+            Nombre del Artista
+          </h3>
+          {showOptionsArtist && (
+            <div>
+              {listArtist.map((option) => (
+                <div key={option.label} className="checkbox-option">
+                  <label>
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      value={option.label}
+                      checked={artist.includes(option.label)}
+                      onChange={(e) => CheckboxChangeArtist(e.target.value)}
+                    />
+                    <span className="option-content">
+                      <span className="option-label">{option.label}</span>
+                      <span className="number" style={{ float: 'right' }}>
+                        {option.number}
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
+
           <h3 className="filterText" onClick={ToggleOptionsLanguage}>
             Idioma
           </h3>
@@ -155,18 +196,18 @@ const MainPage = () => {
             </div>
           )}
 
-          <h3 className="text">Popularidad</h3>
+          <h3 className="text">Popularidad (0-5)</h3>
           <input
             className="textBox"
             type="text"
-            placeholder="Máximo de vistas"
+            placeholder="Máximo"
             value={maxPopularity}
             onChange={(e) => setMaxPopularity(e.target.value)}
           ></input>
           <input
             className="textBox"
             type="text"
-            placeholder="Mínimo de vistas"
+            placeholder="Mínimo"
             value={minPopularity}
             onChange={(e) => setMinPopularity(e.target.value)}
           ></input>
@@ -174,27 +215,17 @@ const MainPage = () => {
           <input
             className="textBox"
             type="text"
-            placeholder="Máximo de canciones"
+            placeholder="Máximo"
             value={maxTotalSongs}
             onChange={(e) => setMaxTotalSongs(e.target.value)}
           ></input>
           <input
             className="textBox"
             type="text"
-            placeholder="Mínimo de canciones"
+            placeholder="Mínimo"
             value={minTotalSongs}
             onChange={(e) => setMinTotalSongs(e.target.value)}
           ></input>
-          {/* <select
-            className="comboBox"
-            value={totalSongs}
-            onChange={(e) => setTotalSongs(e.target.value)}>
-            {songOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select> */}
         </form>
       <form  className="formSongs">
         <h1 className="text">Resultados</h1>
