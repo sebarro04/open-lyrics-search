@@ -31,13 +31,13 @@ template {
     max_replicas = 10
     min_replicas = 0
     container {
-      name   = "api-songsearch"
+      name   = "api-open-lyrics-search"
       image  = "sebarro04/api-open-lyrics-search:latest"
       cpu    = "0.25"
       memory = "0.5Gi"
       env {
         name  = "MONGODB_URI"
-        value = "mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/"
+        value = "mongodb+srv://root:3Jk0tkKXHi94kzyE@cluster-db-02.5ee3b54.mongodb.net/?retryWrites=true&w=majority"
       }
     }
   }
