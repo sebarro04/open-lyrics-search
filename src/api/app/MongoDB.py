@@ -58,9 +58,6 @@ class MongoDB:
                                         }
                                     }
                                 }
-                            }, 
-                            {
-                                '$limit': 5
                             },
                             {
                                 '$project': {
@@ -72,18 +69,18 @@ class MongoDB:
                                 }
                             }
                         ]
-            posicion = 0
+            position = 0
             for i in filters:
-                if query[posicion + 1] == "null":
-                    posicion = posicion + 1
+                if query[position + 1] == "null":
+                    position = position + 1
                 else: 
                     pipeline[0]["$search"]["compound"]["filter"].append({
                         "text": {
-                            "query": query[posicion + 1],
-                            "path": filters[posicion],
+                            "query": query[position + 1],
+                            "path": filters[position],
                         },
                     })
-                    posicion = posicion + 1
+                    position = position + 1
             collection = self.client['open_lyrics_search']['songs']
             result = collection.aggregate(pipeline)
             return result
