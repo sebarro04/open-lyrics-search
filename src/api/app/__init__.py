@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import MongoDB
 
 app = Flask(__name__)
@@ -8,6 +8,19 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 def index():
     return 'Open Lyrics Search'
+
+@app.route('/open-lyrics-search/songs')
+def song_search_text():
+    search = request.args.get('search', None)
+    if search == None:
+        response = jsonify('You must enter a text search')
+        response.status_code = 400
+        return response
+    artists = request.args.getlist('artist')
+    genres = request.args.getlist('genre')
+    popularity = request.args.getlist('popularity')
+    songs = request.args.getlist('songs')
+    return 'Songs search'
 
 @app.route('/open-lyrics-search/songs/<string:id>', methods=['GET'])
 def search_song_by_id(id: str):
