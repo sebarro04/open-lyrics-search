@@ -25,7 +25,7 @@ def load_csv(file_path: str) -> tuple[int, list] | None:
                     row['songs'] = int(row['songs'])  
                 if (is_num(row['popularity'])):
                     row['popularity'] = float(row['popularity'])
-                row['genres'] = row['genres'].split(';')
+                row['genres'] = [x.strip() for x in row['genres'].split(';')] # split genres by ; and delete leading whitespaces
                 artists_data.append(row)
             return 1, artists_data # 1 as flag to indicate artists
         elif 'ALink' in headers and 'SName' in headers and 'SLink' in headers and 'Lyric' in headers and 'language' in headers:
