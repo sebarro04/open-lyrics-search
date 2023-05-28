@@ -9,10 +9,10 @@ class MongoDB:
     def __init__(self):
         self.client = MongoClient(mongodb_connection_string, server_api=ServerApi('1'))
         try:
-            self.client.admin.command('ping')
-            print("Pinged your deployment. You successfully connected to MongoDB!")
-        except Exception as exeption:
-            print(exeption)
+            self.client.server_info()
+            print("MongoDB connected")
+        except Exception as ex:
+            print(ex)
              
     def __del__(self):
         try:
@@ -25,68 +25,13 @@ class MongoDB:
             collection = self.client['open_lyrics_search']['songs']
             query = { '_id': ObjectId(id) }
             result = collection.find_one(query)
+            if result == {}:
+                return result
             result['_id'] = str(result['_id'])
             return result
         except Exception as ex:
             print(ex)
             return Exception('Can not read the song by id')
-    
-    # def search_songs(self, query: list) -> list | Exception:
-    #     try:
-    #         term_to_search = query[0]
-    #         filters = ["artist.genres", "artist.name"]
-    #         pipeline = [
-    #                         {
-    #                             '$search': {
-    #                                 'index': 'test', 
-    #                                 'compound': {
-    #                                     'must': [
-    #                                         {
-    #                                             'text': {
-    #                                                 'query': term_to_search, 
-    #                                                 'path': 'lyric'
-    #                                             }
-    #                                         }
-    #                                     ], 
-    #                                     'filter': [
-                                            
-    #                                     ]
-    #                                 }, 
-    #                                 'highlight': {
-    #                                     'path': {
-    #                                         'wildcard': '*'
-    #                                     }
-    #                                 }
-    #                             }
-    #                         },
-    #                         {
-    #                             '$project': {
-    #                                 '_id': 1, 
-    #                                 'song_name': 1, 
-    #                                 'highlights': {
-    #                                     '$meta': 'searchHighlights'
-    #                                 }
-    #                             }
-    #                         }
-    #                     ]
-    #         position = 0
-    #         for i in filters:
-    #             if query[position + 1] == "null":
-    #                 position = position + 1
-    #             else: 
-    #                 pipeline[0]["$search"]["compound"]["filter"].append({
-    #                     "text": {
-    #                         "query": query[position + 1],
-    #                         "path": filters[position],
-    #                     },
-    #                 })
-    #                 position = position + 1
-    #         collection = self.client['open_lyrics_search']['songs']
-    #         result = collection.aggregate(pipeline)
-    #         return result
-    #     except Exception as ex:
-    #         print(ex)
-    #         return ex
 
     def generate_search_pipeline(self, text_search: str, *params):
         pipeline = [
@@ -176,6 +121,7 @@ class MongoDB:
     
 if __name__ == '__main__':
     mongodb = MongoDB()
-    mongodb.search_songs()
+    #print(mongodb.read_song_by_id('6471c3de55b8c9931ee61e9b'))
+    #mongodb.search_songs()
     del mongodb
     
