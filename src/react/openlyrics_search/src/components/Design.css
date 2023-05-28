@@ -39,6 +39,16 @@
     background-position: center;
   }
 
+  .details_page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    background-image: url('../../public/backgroundLogin.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
   .search-container {
     flex-grow: 1;
     display: flex;
@@ -48,6 +58,13 @@
   
   .formContainer {
     width: 300px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  }
+
+  .formDetails {
+    width: auto;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;
@@ -105,9 +122,23 @@
     color: #333;
   }
   
+  .titleDetails {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-Family: Arial Black, sans-serif;
+  }
+
   .text {
     margin-top: 10px;
     color: #555;
+  }
+
+  .textDetails {
+    margin-top: 10px;
+    color: #555;
+    font-size: 18px;
+    font-Family: Arial Black, sans-serif;
   }
 
   .filterText {
@@ -119,6 +150,14 @@
 
   .filterText:hover {
     color: rgb(53, 44, 44); /* Choose the desired highlight color */
+  }
+
+  .lyrics-text {
+    margin-top: 10px;
+    color: #555;
+    font-size: 18px;
+    font-weight: bold;
+    font-Family: Arial Black, sans-serif;
   }
   
   .textBox {

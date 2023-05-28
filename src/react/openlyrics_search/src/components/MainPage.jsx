@@ -196,7 +196,7 @@ const MainPage = () => {
             </div>
           )}
 
-          <h3 className="text">Popularidad (0-5)</h3>
+          <h3 className="text">Popularidad (0-10)</h3>
           <input
             className="textBox"
             type="text"
