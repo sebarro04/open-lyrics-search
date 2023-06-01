@@ -10,17 +10,29 @@ def index():
     return 'Open Lyrics Search'
 
 @app.route('/open-lyrics-search/songs')
-def song_search_text():
-    search = request.args.get('search', None)
-    if search == None:
+def songs_text_search():
+    query = request.args.to_dict(flat=False)
+    if 'search' not in query:
         response = jsonify('You must enter a text search')
         response.status_code = 400
         return response
-    artists = request.args.getlist('artist')
-    genres = request.args.getlist('genre')
-    popularity = request.args.getlist('popularity')
-    songs = request.args.getlist('songs')
-    return 'Songs search'
+    query['search'] = query['search'][0]
+    print(query)
+    mongodb = MongoDB.MongoDB()
+    songs = mongodb.songs_text_search(query)
+    if isinstance(songs, Exception):
+        response = jsonify(str(songs))
+        response.status_code = 500
+        return response
+    facets = mongodb.songs_text_search_facets(query)
+    if isinstance(facets, Exception):
+        response = jsonify(str(facets))
+        response.status_code = 500
+        return response
+    result = songs | facets
+    response = jsonify(result)
+    response.status_code = 200
+    return response
 
 @app.route('/open-lyrics-search/songs/<string:id>', methods=['GET'])
 def search_song_by_id(id: str):
