@@ -13,6 +13,53 @@ const MainPage = () => {
   const [maxTotalSongs, setMaxTotalSongs] = useState("");
   const [minTotalSongs, setMinTotalSongs] = useState("");
 
+  const [listArtist, setListArtist] = useState([]);
+  const [listLanguage, setListLanguage] = useState([]);
+  const [listMusicalGenre, setListMusicalGenre] = useState([]);
+
+  const fetchData = () => {
+    fetch("https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=%22Love%22")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        const names = jsonData.facets.facet.artist_name.buckets.map((bucket) => bucket._id);
+        const songs = jsonData.facets.facet.artist_name.buckets.map((bucket) => bucket.count);
+        console.log(names);
+        console.log(songs);
+        const updatedListArtist = names.map((name, index) => ({
+          number: songs[index],
+          label: name,
+        }));
+        setListArtist(updatedListArtist);
+
+        const languages = jsonData.facets.facet.language_facet.buckets.map((bucket) => bucket._id);
+        const totalLanguages = jsonData.facets.facet.language_facet.buckets.map((bucket) => bucket.count);
+        console.log(languages);
+        console.log(totalLanguages);
+        const updatedListLanguage = languages.map((name, index) => ({
+          number: totalLanguages[index],
+          label: name,
+        }));
+        setListLanguage(updatedListLanguage);
+
+        const genres = jsonData.facets.facet.genres_facet.buckets.map((bucket) => bucket._id);
+        const totalGenres = jsonData.facets.facet.genres_facet.buckets.map((bucket) => bucket.count);
+        console.log(genres);
+        console.log(totalGenres);
+        const updatedMusicalGenre = genres.map((name, index) => ({
+          number: totalGenres[index],
+          label: name,
+        }));
+        setListMusicalGenre(updatedMusicalGenre);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const userSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -34,24 +81,6 @@ const MainPage = () => {
     const formFacets = document.getElementById('facets');
     formFacets.style.display = formFacets.style.display === 'none' ? 'block' : 'none';
   }; 
-
-  const listArtist = [
-    { number: 100, label: "Aretha Franklin" },
-    { number: 50, label: "Ray Charles" },
-    { number: 30, label: "Elvis Presley" },
-  ];
-
-  const listLanguage = [
-    { number: 100, label: "Inglés" },
-    { number: 50, label: "Español" },
-    { number: 30, label: "Francés" },
-  ];
-
-  const listMusicalGenre = [
-    { number: 100, label: "Rock" },
-    { number: 50, label: "Pop" },
-    { number: 30, label: "Jazz" },
-  ];
 
   const CheckboxChangeArtist = (value) => {
     if (artist.includes(value)) {
