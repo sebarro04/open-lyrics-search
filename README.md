@@ -1,22 +1,22 @@
 # Open Lyrics Search <!-- omit in toc -->
 
 - [Guía De Instalación](#guía-de-instalación)
-    - [Pre Requisitos](#pre-requisitos)
-    - [Infraestructura Azure](#infraestructura-azure)
-    - [Loader](#loader)
-    - [API](#api)
-    - [React App](#react-app)
+  - [Pre Requisitos](#pre-requisitos)
+  - [Infraestructura Azure](#infraestructura-azure)
+  - [Loader](#loader)
+  - [API](#api)
+  - [React App](#react-app)
 - [Guía De Uso](#guía-de-uso)
-    - [Loader](#loader-1)
-    - [API](#api-1)
-    - [React App](#react-app-1)
+  - [Loader](#loader-1)
+  - [API](#api-1)
+  - [React App](#react-app-1)
 - [Pruebas Realizadas](#pruebas-realizadas)
-    - [Loader](#loader-2)
-    - [API](#api-2)
-    - [React APP](#react-app-2)
+  - [Loader](#loader-2)
+  - [API](#api-2)
+  - [React APP](#react-app-2)
 - [Resultados Pruebas Unitarias](#resultados-pruebas-unitarias)
-    - [Loader](#loader-3)
-    - [API](#api-3)
+  - [Loader](#loader-3)
+  - [API](#api-3)
 - [Recomendaciones](#recomendaciones)
 - [Conclusiones](#conclusiones)
 
@@ -85,6 +85,13 @@ env {
 ### API
 
 ### React App
+
+1. Entrar al siguiente link(http://main-alpha.azurewebsites.net/).
+2. Si no se posee una cuenta en la página presionar el botón de registrarse, de lo contrario llenar los campos de correo y contraseña solicitados y presionar el botón de iniciar sesión y pasar al paso 4.
+3. Si se presionó el botón de registrarse llenar los campos con la información solicitada y presionar el botón de registrarse.
+4. Seguidamente aparece una pantalla donde el usuario tiene que llenar el espacio con algún detalle de una canción de su interés y presionar el botón de buscar, si se desea cerrar sesión en algún momento solamente es necesario presionar el botón de cerrar sesión ubicado en la esquina superior derecha y será devuelto a la página de iniciar sesión.
+5. Una vez presionado el botón de buscar será enviado a la página principal de búsquedas donde después de esperar unos segundos aparecerán los primeros 100 resultados obtenidos, así como una parte donde podrá buscar una nueva canción, así como filtrar los resultados obtenidos. Para poder utilizar los filtros simplemente es necesario presionar el botón de filtros, luego elegir que filtros quiere usar presionando sobre ellos.
+6. Para ver más detalles acerca de una canción es necesario presionar sobre el nombre de alguna de estas, luego de esto será enviado a una página con todos los detalles acerca de la canción seleccionada. Para volver a buscar canciones solamente se necesita presionar el botón volver y será enviado devuelta a la página principal de búsquedas.
 
 ## Pruebas Realizadas
 
