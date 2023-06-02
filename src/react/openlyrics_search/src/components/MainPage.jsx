@@ -17,12 +17,19 @@ const MainPage = () => {
   const [listPopularity, setListPopularity] = useState([]);
   const [listTotalSongs, setListTotalSongs] = useState([]);
   const [listSongs, setListSongs] = useState([]);
+  const [listRuta, setListRuta] = useState([]);
 
   const fetchData = () => {
     const link = "https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=";
     const search = encodeURIComponent(song);
-    const combinedLink = `${link}${search}`;
     /*"https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=%22Love%22" */
+    const searchedArtist = artist.length > 0 ? `&artist=${encodeURIComponent(artist)}` : "";
+    const searchedLanguage = language.length > 0 ? `&language=${encodeURIComponent(language)}` : "";
+    const searchedGenre = musicalGenre.length > 0 ? `&genre=${encodeURIComponent(musicalGenre)}` : "";
+    const searchedPopularity = popularity.length > 0 ? `&popularity=${encodeURIComponent(popularity)}` : "";
+    const searchedTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(totalSongs)}` : "";
+    const combinedLink = `${link}${search}${searchedArtist}${searchedLanguage}${searchedGenre}${searchedPopularity}${searchedTotalSongs}`;
+    /*console.log(combinedLink)*/
     fetch(combinedLink)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -91,11 +98,23 @@ const MainPage = () => {
           number: first100ID[index],
         }));
         setListSongs(updatedSongs);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+
+        const highlights = jsonData.songs.flatMap((hits) => hits.highlights);
+
+        const lyricHighlights = highlights.filter((highlight) => highlight.path === "lyric");
+        const top100LyricHighlights = lyricHighlights.slice(0, 100);
+        const updatedListRuta = top100LyricHighlights.map((highlight, index) => ({
+          hit: song,
+          value: lyricHighlights[index]?.texts.find((text) => text.type === "text")?.value || "",
+        }));
+        setListRuta(updatedListRuta);
+
+        console.log(listRuta);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+};
 
   useEffect(() => {
     fetchData();
@@ -203,6 +222,10 @@ const MainPage = () => {
     navigate('/detailsPage', { state: { song, filterNumber } });
   };
 
+  const handleSearch = () => {
+    fetchData();
+  };
+
   return (
     <div className="main_page-container">
         <form  className="formSearch">
@@ -213,7 +236,7 @@ const MainPage = () => {
             value={song}
             onChange={(e) => setSong(e.target.value)}
           ></input>
-          <button onClick={() => { navigate('/detailsPage'); }} type="button" className="buttons">Buscar</button>
+          <button type="button" className="buttons" onClick={handleSearch}>Buscar</button>
 
           <button type="button" className="buttons" onClick={filters}>Filtros</button>
         </form>
@@ -225,7 +248,7 @@ const MainPage = () => {
           {showOptionsArtist && (
             <div>
               {listArtist.map((option) => (
-                <div key={option.label} className="checkbox-option">
+                <div className="checkbox-option">
                   <label>
                     <input
                       className="checkbox"
@@ -252,7 +275,7 @@ const MainPage = () => {
           {showOptionsLanguage && (
             <div>
               {listLanguage.map((option) => (
-                <div key={option.label} className="checkbox-option">
+                <div className="checkbox-option">
                   <label>
                     <input
                       className="checkbox"
@@ -279,7 +302,7 @@ const MainPage = () => {
           {showOptionsMusicalGenre && (
             <div>
               {listMusicalGenre.map((option) => (
-                <div key={option.label} className="checkbox-option">
+                <div className="checkbox-option">
                   <label>
                     <input
                       className="checkbox"
@@ -306,7 +329,7 @@ const MainPage = () => {
           {showOptionsPopularity && (
             <div>
               {listPopularity.map((option) => (
-                <div key={option.label} className="checkbox-option">
+                <div className="checkbox-option">
                   <label>
                     <input
                       className="checkbox"
@@ -333,7 +356,7 @@ const MainPage = () => {
           {showOptionsTotalSongs && (
             <div>
               {listTotalSongs.map((option) => (
-                <div key={option.label} className="checkbox-option">
+                <div className="checkbox-option">
                   <label>
                     <input
                       className="checkbox"
@@ -355,19 +378,22 @@ const MainPage = () => {
           )}
 
         </form>
-      <form  className="formSongs">
-        <h1 className="text">Resultados</h1>
-        <h3 className="text">
-          {listSongs.map((cancion) => (
-            <div
-              className="filterText"
-              onClick={() => navigateToDetailsPage(cancion.number)}
-            >
-              {cancion.label}
-            </div>
-          ))}
-        </h3>
-      </form>
+        <form className="formSongs">
+          <h1 className="text">Resultados</h1>
+          <h3 className="text">
+            {listSongs.map((cancion, index) => (
+              <div>
+                <h3 className="filterText" onClick={() => navigateToDetailsPage(cancion.number)}>
+                  {cancion.label}
+                </h3>
+                <pre className="text">
+                  {listRuta[index]?.value}
+                  <span className="underlinedText">{listRuta[index]?.hit}</span>
+                </pre>
+              </div>
+            ))}
+          </h3>
+        </form>
         <form className="formLogOut">
           <button onClick={() => { userSignOut(); navigate('/'); }} className="buttons">Cerrar Sesión</button>
         </form>
