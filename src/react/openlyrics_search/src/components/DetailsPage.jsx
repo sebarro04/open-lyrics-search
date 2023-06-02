@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const DetailsPage = () => {
   const [songName, setSongName] = useState("");
@@ -11,10 +11,16 @@ const DetailsPage = () => {
   const [popularity, setPopularity] = useState("");
   const [totalSongs, setTotalSongs] = useState("");
   const [lyrics, setLyrics] = useState("");
+  const [id, setId] = useState("");
+  const [song, setSong] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fetchData = () => {
-    fetch("https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs/6471c35b55b8c9931ee5b155")
+    const link = "https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs/";
+    const combinedLink = `${link}${id}`;
+    /*"https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs/6471c35b55b8c9931ee5b155"*/
+    fetch(combinedLink)
       .then((response) => response.json())
       .then((jsonData) => {
         setSongName(jsonData.song_name);
@@ -24,8 +30,6 @@ const DetailsPage = () => {
         setPopularity(jsonData.artist.popularity);
         setTotalSongs(jsonData.artist.songs);
         setLyrics(jsonData.lyric);
-        console.log(jsonData);
-        console.log(jsonData.lyric);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -34,7 +38,7 @@ const DetailsPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, );
 
   const userSignOut = () => {
     signOut(auth)
@@ -43,6 +47,13 @@ const DetailsPage = () => {
       })
       .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    if (location.state && location.state.filterNumber) {
+      setId(location.state.filterNumber);
+      setSong(location.state.song);
+    }
+  }, [location.state]);
 
   return (
     <div className="details_page-container">
@@ -55,7 +66,7 @@ const DetailsPage = () => {
         <h3 className="textDetails">Total de canciones del artista: {totalSongs}</h3>
         <h3 className="textDetails">Letra de la canción:</h3>
         <pre className="lyrics-text">{lyrics}</pre>
-        <button onClick={() => navigate("/mainPage")} type="button" className="buttons">
+        <button onClick={() => navigate('/mainPage', { state: { song } })} type="button" className="buttons">
           Volver
         </button>
       </form>

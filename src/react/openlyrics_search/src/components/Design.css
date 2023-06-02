@@ -22,7 +22,7 @@
   .main_page-container {
     display: flex;
     justify-content: center;
-    height: 150vh;
+    height: auto;
     background-image: url('../../public/backgroundLogin.jpg');
     background-size: cover;
     background-position: center;
