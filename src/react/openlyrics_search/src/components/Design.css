@@ -64,7 +64,7 @@
   }
 
   .formDetails {
-    width: auto;
+    width: 600px;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;
@@ -89,7 +89,7 @@
   }
 
   .formSongs {
-    width: 500px;
+    width: 600px;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;

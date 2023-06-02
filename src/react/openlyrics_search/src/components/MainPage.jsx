@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const MainPage = () => {
   const [song, setSong] = useState("");
+  const [newSong, setNewSong] = useState("");
   const [artist, setArtist] = useState("");
   const [language, setLanguage] = useState("");
   const [musicalGenre, setMusicalGenre] = useState("");
@@ -134,6 +135,7 @@ const MainPage = () => {
   useEffect(() => {
     if (location.state && location.state.song) {
       setSong(location.state.song);
+      setNewSong(location.state.song);
     }
   }, [location.state]);
 
@@ -223,6 +225,7 @@ const MainPage = () => {
   };
 
   const handleSearch = () => {
+    setSong(newSong);
     fetchData();
   };
 
@@ -233,8 +236,8 @@ const MainPage = () => {
           <input
             className="textBox"
             type="text"
-            value={song}
-            onChange={(e) => setSong(e.target.value)}
+            value={newSong}
+            onChange={(e) => setNewSong(e.target.value)}
           ></input>
           <button type="button" className="buttons" onClick={handleSearch}>Buscar</button>
 
