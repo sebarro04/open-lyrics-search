@@ -4,13 +4,22 @@ def generate_pipeline_query(query: dict) -> dict:
     mapping = {'artist': 'artist.name', 'genre': 'artist.genres', 'popularity': 'artist.popularity', 'songs': 'artist.songs', 'language': 'language'} # query mapping to document paths
     for key in query:
         if key == 'search':
-            temp = {
-                'phrase': {
-                    'path': { 'wildcard': '*' },
-                    'query': query[key]
+            if query[key][0] == '"' and query[key][len(query[key]) - 1] == '"':
+                temp = {
+                    'phrase': {
+                        'path': { 'wildcard': '*' },
+                        'query': query[key]
+                    }
                 }
-            }
-            must.append(temp)
+                must.append(temp)
+            else:
+                temp = {
+                    'text': {
+                        'path': { 'wildcard': '*' },
+                        'query': query[key]
+                    }
+                }
+                must.append(temp)
         if key == 'artist' or key == 'genre' or key == 'language':
             temp = {
                 'text': {
@@ -38,7 +47,8 @@ def generate_search_pipeline(query: dict) -> list:
             '$search': {
                 'compound': compound,
                 'highlight': {
-                    'path': { 'wildcard': '*' }
+                    'path': { 'wildcard': '*' },
+                    'maxNumPassages': 1
                 }
             }
         },
@@ -46,8 +56,7 @@ def generate_search_pipeline(query: dict) -> list:
             '$project': {
                 '_id': 1,
                 'song_name': 1,
-                'lyric': 1,
-                "highlights": { "$meta": "searchHighlights" },
+                'highlights': { '$meta': 'searchHighlights' },
                 'score': { '$meta': 'searchScore' }
             }
         },
@@ -69,11 +78,13 @@ def generate_search_meta_pipeline(query: dict) -> list:
                     'facets': {
                         'artist_name': {
                             'type': 'string',
-                            'path': 'artist.name'
+                            'path': 'artist.name',
+                            'numBuckets': 25
                         },
                         'genres_facet': {
                             'type': 'string',
-                            'path': 'artist.genres'
+                            'path': 'artist.genres',
+                            'numBuckets': 25
                         },
                         'popularity_facet': {
                             'type': 'number',
@@ -89,7 +100,8 @@ def generate_search_meta_pipeline(query: dict) -> list:
                         },
                         'language_facet': {
                             'type': 'string',
-                            'path': 'language'
+                            'path': 'language',
+                            'numBuckets': 25
                         }
                     }
                 }
