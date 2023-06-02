@@ -23,7 +23,7 @@ class TestMongoDB(unittest.TestCase):
         # Crear una instancia de MongoDB con el cliente mock
         with patch('MongoDB.MongoClient', return_value=self.mock_client):
             mongodb = MongoDB()
-            song = mongodb.read_song_by_id('6471c3de55b8c9931ee61e9')
+            song = mongodb.read_song_by_id('6471c3de55b8c9931ee61e9b')
 
             # Verificar que se haya llamado a los métodos y obtener los argumentos pasados
             self.mock_collection.find_one.assert_called_once_with({'_id': ObjectId('6471c3de55b8c9931ee61e9b')})
@@ -47,10 +47,10 @@ class TestMongoDB(unittest.TestCase):
             # Verificar los resultados
             self.assertEqual(result, {'songs': [{'_id': '6471c3de55b8c9931ee61e9b', 'title':'Lose Yourself'}]})
 
-    """ def test_songs_text_search_facets(self):
+    def test_songs_text_search_facets(self):
         # Configurar el objeto Mock para la colección y el resultado
         self.mock_collection.aggregate.return_value = self.mock_result
-        self.mock_result.__iter__.return_value = [{'facet1': 'value1', 'facet2': 'value2'}]
+        self.mock_result.__iter__.return_value = [{'language': 'en'}]
 
         # Crear una instancia de MongoDB con el cliente mock
         with patch('MongoDB.MongoClient', return_value=self.mock_client):
@@ -61,7 +61,7 @@ class TestMongoDB(unittest.TestCase):
             self.mock_collection.aggregate.assert_called_once()
 
             # Verificar los resultados
-            self.assertEqual(result, {'facets': {'facet1': 'value1', 'facet2': 'value2'}}) """
+            self.assertEqual(result, {'facets': {'language': 'en'}})
 
 if __name__ == '__main__':
     unittest.main()
