@@ -1,16 +1,51 @@
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+from flask import Flask, jsonify, request
+import MongoDB
 
+app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+@app.route('/')
+def index():
+    return 'Open Lyrics Search'
+
+@app.route('/open-lyrics-search/songs')
+def songs_text_search():
+    query = request.args.to_dict(flat=False)
+    if 'search' not in query:
+        response = jsonify('You must enter a text search')
+        response.status_code = 400
+        return response
+    query['search'] = query['search'][0]
+    print(query)
+    mongodb = MongoDB.MongoDB()
+    songs = mongodb.songs_text_search(query)
+    if isinstance(songs, Exception):
+        response = jsonify(str(songs))
+        response.status_code = 500
+        return response
+    facets = mongodb.songs_text_search_facets(query)
+    if isinstance(facets, Exception):
+        response = jsonify(str(facets))
+        response.status_code = 500
+        return response
+    result = songs | facets
+    response = jsonify(result)
+    response.status_code = 200
+    return response
+
+@app.route('/open-lyrics-search/songs/<string:id>', methods=['GET'])
+def search_song_by_id(id: str):
+    mongodb = MongoDB.MongoDB()
+    result = mongodb.read_song_by_id(id)
+    if isinstance(result, Exception):
+        response = jsonify(str(result))
+        response.status_code = 500
+        return response
+    response = jsonify(result)
+    response.status_code = 200
+    return response
+    
 if __name__ == '__main__':
-    # Replace the placeholder with your Atlas connection string
-    uri = "mongodb+srv://geraldnc88:GNCia2002#@cluster0.ibhh1cq.mongodb.net/"
-    # Set the Stable API version when creating a new client
-    client = MongoClient(uri, server_api=ServerApi('1'))
-                            
-    # Send a ping to confirm a successful connection
-    try:
-        client.admin.command('ping')
-        print("Pinged your deployment. You successfully connected to MongoDB!")
-    except Exception as exeption:
-        print(exeption)
+    app.run(host = '0.0.0.0', debug=True)
+
