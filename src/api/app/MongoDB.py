@@ -65,5 +65,6 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
+    mongodb.songs_text_search_facets()
     del mongodb
     
