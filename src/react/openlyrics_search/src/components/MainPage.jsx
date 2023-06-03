@@ -10,7 +10,9 @@ const MainPage = () => {
   const [language, setLanguage] = useState("");
   const [musicalGenre, setMusicalGenre] = useState("");
   const [popularity, setPopularity] = useState("");
+  const [minPopularity, setMinPopularity] = useState("");
   const [totalSongs, setTotalSongs] = useState("");
+  const [minTotalSongs, setMinTotalSongs] = useState("");
 
   const [listArtist, setListArtist] = useState([]);
   const [listLanguage, setListLanguage] = useState([]);
@@ -23,14 +25,18 @@ const MainPage = () => {
   const fetchData = () => {
     const link = "https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=";
     const search = encodeURIComponent(song);
+    const maxPopularity = parseInt(minPopularity) + 50;
+    const maxTotalSongs = parseInt(minTotalSongs) + 200;
     /*"https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=%22Love%22" */
     const searchedArtist = artist.length > 0 ? `&artist=${encodeURIComponent(artist)}` : "";
     const searchedLanguage = language.length > 0 ? `&language=${encodeURIComponent(language)}` : "";
     const searchedGenre = musicalGenre.length > 0 ? `&genre=${encodeURIComponent(musicalGenre)}` : "";
-    const searchedPopularity = popularity.length > 0 ? `&popularity=${encodeURIComponent(popularity)}` : "";
-    const searchedTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(totalSongs)}` : "";
-    const combinedLink = `${link}${search}${searchedArtist}${searchedLanguage}${searchedGenre}${searchedPopularity}${searchedTotalSongs}`;
-    /*console.log(combinedLink)*/
+    const searchedMinPopularity = minPopularity.length > 0 ? `&popularity=${encodeURIComponent(minPopularity)}` : "";
+    const searchedMaxPopularity = minPopularity.length > 0 ? `&popularity=${encodeURIComponent(maxPopularity)}` : "";
+    const searchedMinTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(minTotalSongs)}` : "";
+    const searchedMaxTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(maxTotalSongs)}` : "";
+    const combinedLink = `${link}${search}${searchedArtist}${searchedLanguage}${searchedGenre}${searchedMinPopularity}${searchedMaxPopularity}${searchedMinTotalSongs}${searchedMaxTotalSongs}`;
+    //console.log(combinedLink);
     fetch(combinedLink)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -65,11 +71,13 @@ const MainPage = () => {
             return {
               number: totalRatingSongs[index],
               label: `Más de ${rating[index - 1]+49}`,
+              minimum: rating[index - 1]+49,
             };
           }
           return {
             number: totalRatingSongs[index],
             label: `${name}-${name+49}`,
+            minimum: name,
           };
         });
         setListPopularity(updatedPopularity);
@@ -81,11 +89,13 @@ const MainPage = () => {
             return {
               number: totalSongsRange[index],
               label: `Más de ${range[index - 1]+199}`,
+              minimum: range[index - 1]+199,
             };
           }
           return {
             number: totalSongsRange[index],
             label: `${name}-${name+199}`,
+            minimum: name,
           };
         });
         setListTotalSongs(updatedTotalSongs);
@@ -110,7 +120,6 @@ const MainPage = () => {
         }));
         setListRuta(updatedListRuta);
 
-        console.log(listRuta);
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -175,22 +184,28 @@ const MainPage = () => {
   };
 
   const CheckboxChangePopularity = (value) => {
+    const selectedOption = listPopularity.find((option) => option.label === value);
     if (popularity.includes(value)) {
-      // Remueve el valor si ya lo contiene
-      setPopularity(popularity.filter((po) => po !== value));
+      // Uncheck the value if it is already selected
+      setPopularity([]);
+      setMinPopularity([]);
     } else {
-      // Agrega el valor si no lo contiene
-      setPopularity([...popularity, value]);
+      // Set the selected value and uncheck others
+      setPopularity([value]);
+      setMinPopularity([selectedOption.minimum]);
     }
   };
 
   const CheckboxChangeTotalSongs = (value) => {
+    const selectedOption = listTotalSongs.find((option) => option.label === value);
     if (totalSongs.includes(value)) {
       // Remueve el valor si ya lo contiene
-      setTotalSongs(totalSongs.filter((ts) => ts !== value));
+      setTotalSongs([]);
+      setMinTotalSongs([]);
     } else {
       // Agrega el valor si no lo contiene
-      setTotalSongs([...totalSongs, value]);
+      setTotalSongs([value]);
+      setMinTotalSongs([selectedOption.minimum]);
     }
   };
 
