@@ -58,7 +58,7 @@ Abrir la herramienta para enviar peticiones HTTP.
 1. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs con método GET.
 2. Se recibiran los siguientes parámetros en la petición:
     * search
-        * Obligtorio.
+        * Obligatorio.
         * Representa la búsqueda de texto que se hará sobre las canciones.
         * Si se pone el término entre **""**, se hará una búsqueda de frase exacta.
     * genre
