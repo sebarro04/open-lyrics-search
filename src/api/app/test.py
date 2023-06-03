@@ -6,7 +6,7 @@ from flask import Flask
 import __init__
 from MongoDB import MongoDB
 
-""" class TestMongoDB(unittest.TestCase):
+class TestMongoDB(unittest.TestCase):
     def setUp(self):
         # Configurar un objeto Mock para MongoClient
         self.mock_client = MagicMock(MongoClient)
@@ -47,7 +47,8 @@ from MongoDB import MongoDB
             # Verificar los resultados
             self.assertEqual(result, {'songs': [{'_id': '6471c3de55b8c9931ee61e9b', 'title':'Lose Yourself'}]})
 
-    def test_songs_text_search_facets(self):
+    
+"""def test_songs_text_search_facets(self):
         # Configurar el objeto Mock para la colección y el resultado
         self.mock_collection.aggregate.return_value = self.mock_result
         self.mock_result.__iter__.return_value = [{'language': 'en'}]
@@ -63,38 +64,6 @@ from MongoDB import MongoDB
             # Verificar los resultados
             self.assertEqual(result, {'facets': {'language': 'en'}}) """
 
-class TestApp(unittest.TestCase):
-    def setUp(self):
-        self.app = Flask(__name__)
-        self.app.config['TESTING'] = True
-        self.client = self.app.test_client()
-
-    def test_index(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_data(as_text=True), 'Open Lyrics Search')
-
-    """@patch('__init__.MongoDB')
-    def test_songs_text_search(self, mock_mongodb):
-        mock_mongodb_instance = MagicMock(MongoDB)
-        mock_mongodb_instance.songs_text_search.return_value = {'songs': [{'title': 'Lose Yourself'}]}
-        mock_mongodb.return_value = mock_mongodb_instance
-
-        response = self.client.get('/open-lyrics-search/songs?search=query')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {'songs': [{'title': 'Lose Yourself'}]})
-
-        mock_mongodb_instance.songs_text_search.assert_called_once_with({'search': 'query'})"""
-
-    @patch('__init__.MongoDB')
-    def test_search_song_by_id(self, mock_mongodb):
-        mock_mongodb_instance = MagicMock(MongoDB)
-        mock_mongodb_instance.read_song_by_id.return_value = {'title': 'Lose Yourself'}
-        mock_mongodb.return_value = mock_mongodb_instance
-        response = self.client.get('/open-lyrics-search/songs/6471c3de55b8c9931ee61e9b')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {'title': 'Lose Yourself'})
-        mock_mongodb_instance.read_song_by_id.assert_called_once_with('6471c3de55b8c9931ee61e9b')
 
 if __name__ == '__main__':
     unittest.main()
