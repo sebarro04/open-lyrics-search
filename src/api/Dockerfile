@@ -7,6 +7,8 @@ WORKDIR /app
 COPY app/. .
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN python -u TestPipelines.py
+RUN rm TestPipelines.py
 RUN rm .env
 
 CMD ["python", "-u", "__init__.py"]
