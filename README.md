@@ -14,10 +14,11 @@
 - [Pruebas Realizadas](#pruebas-realizadas)
     - [Loader](#loader-2)
     - [API](#api-2)
-    - [React APP](#react-app-2)
 - [Resultados Pruebas Unitarias](#resultados-pruebas-unitarias)
     - [Loader](#loader-3)
+        - [TestDataLoader](#testdataloader)
     - [API](#api-3)
+        - [TestPipelines](#testpipelines)
 - [Recomendaciones](#recomendaciones)
 - [Conclusiones](#conclusiones)
 
@@ -83,6 +84,7 @@ No es necesario instalar nada de este módulo, ya que la aplicación se encuentr
 5. Al ejecutar la petición se recibirá un documentos con 2 keys:
     * Facets
         * Contiene los facets que se generaron de las canciones con la búsqueda realizada.
+            * Los facets de nombres de artista, géneros musicales y lenguaje están limitados a traer los primeros 25 agrupamientos (ordenados de mayor a menor).
     * Songs
         * Contiene el id, highlights (donde se encontraron match de la búsqueda con la canción), puntuación de la búsqueda y el nombre de la canción.
 
@@ -111,7 +113,13 @@ El loader fue probado con 4 archivos, los 2 archivos fuente y 2 archivos creados
 
 ### API
 
-### React APP
+Se realizaron distintas peticiones HTTP con Postman probando distintas combinaciones de parámetros, algunas fueron:
+
+* https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=center core never more
+* https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search="I got a laptop in my back pocket"
+* https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=I got a laptop in my back pocket
+* https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=house&genre=rap
+* https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?search=today&artist=Slipknot&genre=rock
 
 ## Resultados Pruebas Unitarias
 
@@ -139,7 +147,15 @@ OK
 
 ### Loader
 
+#### TestDataLoader
+
+Todas las pruebas aprobaron. Estas pruebas fueron de gran utilidad ya que ayudó a saber rápidamente si los csv se estaban procesando correctamente y si la información se conectaba como debia.
+
 ### API
+
+#### TestPipelines
+
+
 
 ## Recomendaciones
 

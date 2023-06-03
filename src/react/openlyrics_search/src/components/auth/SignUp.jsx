@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom'
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confPassword, setconfPassword] = useState("");
   const [name, setName] = useState("");
   const [birthdate, setBirthdate] = useState("");
 
@@ -27,6 +28,15 @@ const SignUp = () => {
 
   const signUp = (e) => {
     e.preventDefault();
+
+    if (password !== confPassword) {
+      var errorMessage = document.getElementById('errorLogin');
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "Las contraseñas no coinciden";
+      document.getElementById('espace').style.display = "none";
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
@@ -63,6 +73,13 @@ const SignUp = () => {
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        ></input>
+        <input
+          className="textBoxSingUp"
+          type="password"
+          placeholder="Confirmar Contraseña"
+          value={confPassword}
+          onChange={(e) => setconfPassword(e.target.value)}
         ></input>
         <h3 className="text">Ingrese su nombre de perfil</h3>
         <input
