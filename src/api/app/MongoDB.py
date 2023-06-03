@@ -56,7 +56,6 @@ class MongoDB:
             facets = []
             for document in result:
                 facets.append(document)
-            print(facets)
             return {'facets': facets[0]}
         except Exception as ex:
             print(ex)
@@ -65,5 +64,6 @@ class MongoDB:
 
 if __name__ == '__main__':
     mongodb = MongoDB()
+    mongodb.songs_text_search_facets()
     del mongodb
     
