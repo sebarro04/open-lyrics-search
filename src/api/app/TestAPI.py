@@ -16,9 +16,9 @@ class TestAPI(unittest.TestCase):
     
     @mock.patch('MongoDB.MongoDB.songs_text_search')
     def test_songs_text_search(self, mock_songs_text_search):
-        mock_songs_text_search.return_value = {'song': 'lyrics', 'facets': {'count': {'lowerBound': 2139}}}
-        self.app.get('/open-lyrics-search/songs?search=test')
-        mock_songs_text_search.assert_called_once_with({'search': 'test'})
+        mock_songs_text_search.return_value = {'song1': 'Lyric1'}
+        self.app.get('/open-lyrics-search/songs?search=love')
+        mock_songs_text_search.assert_called_one_with({'search': 'love'})
 
 
 if __name__ == '__main__':
