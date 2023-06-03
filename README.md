@@ -127,7 +127,7 @@ Se realizaron distintas peticiones HTTP con Postman probando distintas combinaci
 
 #### TestDataLoader
 
-Todas las pruebas aprobaron. Estas pruebas fueron de gran utilidad ya que ayudó a saber rápidamente si los csv se estaban procesando correctamente y si la información se conectaba como debia.
+Todas las pruebas aprobaron. Estas pruebas fueron de gran utilidad ya que ayudó a saber rápidamente si los csv se estaban procesando correctamente y si la información se conectaba como debía.
 
 ### API
 
