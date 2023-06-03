@@ -123,28 +123,6 @@ Se realizaron distintas peticiones HTTP con Postman probando distintas combinaci
 
 ## Resultados Pruebas Unitarias
 
-Se realizaron pruebas unitarias para comprobar las funciones de los archivos MongoDB y pipeline, respectivamente se llaman TestMongoDB y TestPipelines. 
-
-Simplemente se deben correr los archivos y se podrá observar los resultados que muestran las pruebas unitarias. Ambas pruebas unitarias deberían tener éxito. 
-
-**Resultados de pruebas unitarias de TestMongoDB:**
-
-MongoDB connected
-.MongoDB connected
-.MongoDB connected
-
-Ran 3 tests in 0.014s
-
-OK
-
-**Resultados de pruebas unitarias de TestPipelines:**
-
-....
-
-Ran 4 tests in 0.002s
-
-OK
-
 ### Loader
 
 #### TestDataLoader
