@@ -25,9 +25,9 @@
 
 ### Pre Requisitos
 
-* Clonar el repositorio a la máquina local
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-* Alguna herramienta para enviar peticiones HTTP como [Postman](https://www.postman.com/downloads/)
+* Clonar el repositorio a la máquina local.
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+* Alguna herramienta para enviar peticiones HTTP como [Postman](https://www.postman.com/downloads/).
 
 ### Loader
 
@@ -45,9 +45,10 @@ No es necesario instalar nada de este módulo, ya que la aplicación se encuentr
 
 ### Loader
 
-1. Abrir una terminal.
-2. Ir al directorio **src/loader**.
-3. Ejecutar el comando `docker compose up` o `docker compose up -d` si no se desea ver los logs de los contenedores en la terminal.
+1. Abrir Docker Desktop.
+2. Abrir una terminal en la máquina local.
+3. Ir al directorio **src/loader**.
+4. Ejecutar el comando `docker compose up` o `docker compose up -d` si no se desea ver los logs de los contenedores en la terminal.
 
 ### API
 
