@@ -18,15 +18,15 @@ def songs_text_search():
         return response
     query['search'] = query['search'][0]
     if 'popularity' in query:
-        if len(query['popularity']) != 2:
-            response = jsonify('You must enter a popularity range')
+        if len(query['popularity']) != 1 and len(query['popularity']) != 2:
+            response = jsonify('You must enter 1 or 2 popularity parameters')
             response.status_code = 400
             return response
         query['popularity'] = [float(x) for x in query['popularity']]
         query['popularity'].sort()
     if 'songs' in query:
-        if len(query['songs']) != 2:
-            response = jsonify('You must enter a songs range')
+        if len(query['songs']) != 1 and len(query['songs']) != 2:
+            response = jsonify('You must enter enter 1 or 2 songs parameters')
             response.status_code = 400
             return response
         query['songs'] = [int(x) for x in query['songs']]
