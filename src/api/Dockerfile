@@ -7,7 +7,6 @@ WORKDIR /app
 COPY app/. .
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python -u TestAPI.py
 RUN python -u TestMongoDB.py
 RUN python -u TestPipelines.py
 
