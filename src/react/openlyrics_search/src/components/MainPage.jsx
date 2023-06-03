@@ -32,9 +32,9 @@ const MainPage = () => {
     const searchedLanguage = language.length > 0 ? `&language=${encodeURIComponent(language)}` : "";
     const searchedGenre = musicalGenre.length > 0 ? `&genre=${encodeURIComponent(musicalGenre)}` : "";
     const searchedMinPopularity = minPopularity.length > 0 ? `&popularity=${encodeURIComponent(minPopularity)}` : "";
-    const searchedMaxPopularity = minPopularity.length > 0 ? `&popularity=${encodeURIComponent(maxPopularity)}` : "";
+    const searchedMaxPopularity = minPopularity.length > 0 && maxPopularity <= 200 ? `&popularity=${encodeURIComponent(maxPopularity)}` : "";
     const searchedMinTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(minTotalSongs)}` : "";
-    const searchedMaxTotalSongs = totalSongs.length > 0 ? `&songs=${encodeURIComponent(maxTotalSongs)}` : "";
+    const searchedMaxTotalSongs = totalSongs.length > 0 && maxTotalSongs <= 1000 ? `&songs=${encodeURIComponent(maxTotalSongs)}` : "";
     const combinedLink = `${link}${search}${searchedArtist}${searchedLanguage}${searchedGenre}${searchedMinPopularity}${searchedMaxPopularity}${searchedMinTotalSongs}${searchedMaxTotalSongs}`;
     //console.log(combinedLink);
     fetch(combinedLink)
@@ -115,10 +115,13 @@ const MainPage = () => {
         const lyricHighlights = highlights.filter((highlight) => highlight.path === "lyric");
         const top100LyricHighlights = lyricHighlights.slice(0, 100);
         const updatedListRuta = top100LyricHighlights.map((highlight, index) => ({
-          hit: song,
+          hit: lyricHighlights[index]?.texts.find((text) => text.type === "hit")?.value || "",
           value: lyricHighlights[index]?.texts.find((text) => text.type === "text")?.value || "",
+          
         }));
+        //console.log(top100LyricHighlights.);
         setListRuta(updatedListRuta);
+        
 
     })
     .catch((error) => {
