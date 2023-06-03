@@ -49,7 +49,8 @@ def generate_search_pipeline(query: dict) -> list:
                 'highlight': {
                     'path': { 'wildcard': '*' },
                     'maxNumPassages': 1
-                }
+                },
+                'returnStoredSource': True
             }
         },
         {
