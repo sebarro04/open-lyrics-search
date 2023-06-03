@@ -29,13 +29,22 @@ def generate_pipeline_query(query: dict) -> dict:
             }
             filter.append(temp)
         elif key == 'popularity' or key == 'songs':
-            temp = {
-                'range': {
-                    'path': mapping[key],
-                    'gte': query[key][0],
-                    'lte': query[key][1]
+            temp = None
+            if len(query[key]) == 1:
+                temp = {
+                    'range': {
+                        'path': mapping[key],
+                        'gte': query[key][0]
+                    }
                 }
-            }
+            else:
+                temp = {
+                    'range': {
+                        'path': mapping[key],
+                        'gte': query[key][0],
+                        'lte': query[key][1]
+                    }
+                }
             filter.append(temp)
     compound = {'must': must, 'filter': filter}
     return compound
