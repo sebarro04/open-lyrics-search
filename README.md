@@ -155,7 +155,25 @@ Todas las pruebas aprobaron. Estas pruebas fueron de gran utilidad ya que ayudó
 
 #### TestPipelines
 
+Las pruebas unitarias de TestPipelines pasaron con éxito y los resultados son los siguientes: 
 
+....
+
+Ran 4 tests in 0.002s
+
+OK
+
+#### TestMongoDB
+
+Las pruebas unitarias de TestPipelines pasaron con éxito y los resultados son los siguientes: 
+
+MongoDB connected
+.MongoDB connected
+.MongoDB connected
+
+Ran 3 tests in 0.014s
+
+OK
 
 ## Recomendaciones
 
