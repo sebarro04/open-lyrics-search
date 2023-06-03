@@ -52,12 +52,11 @@ No es necesario instalar nada de este módulo, ya que la aplicación se encuentr
 
 ### API
 
-Abrir la herramienta para enviar peticiones HTTP.
-
 #### Full Text Search
 
-1. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs con método GET.
-2. Se recibiran los siguientes parámetros en la petición:
+1. Abrir la herramienta para enviar peticiones HTTP.
+2. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs con método GET.
+3. Se recibiran los siguientes parámetros en la petición:
     * search
         * Obligatorio.
         * Representa la búsqueda de texto que se hará sobre las canciones.
@@ -78,10 +77,10 @@ Abrir la herramienta para enviar peticiones HTTP.
         * Opcional.
         * Representa la cantidad de canciones del artista por la cual se quieren filtrar las canciones.
         * Puede ser uno (se toma como un límite inferior) o dos (se toma como un rango) de estos parámetros.
-3. Para poner parámetros en el request, se debe poner un **?** al final del endpoint y escribir los parámetros de la siguiente forma:
+4. Para poner parámetros en el request, se debe poner un **?** al final del endpoint y escribir los parámetros de la siguiente forma:
     * parameter=value&parameter=value...
     * El endpoint quedaría: https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs?parameter=value&parameter=value
-4. Al ejecutar la petición se recibirá un documentos con 2 keys:
+5. Al ejecutar la petición se recibirá un documentos con 2 keys:
     * Facets
         * Contiene los facets que se generaron de las canciones con la búsqueda realizada.
     * Songs
@@ -89,10 +88,11 @@ Abrir la herramienta para enviar peticiones HTTP.
 
 #### Consulta De Canciones Por ID
 
-1. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs/id con método GET.
-2. Sustituir id por el id de la canción que se desea buscar.
-3. Ejecutar la petición.
-4. Se retornará un documento con toda la información de la canción.
+1. Abrir la herramienta para enviar peticiones HTTP.
+2. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs/id con método GET.
+3. Sustituir id por el id de la canción que se desea buscar.
+4. Ejecutar la petición.
+5. Se retornará un documento con toda la información de la canción.
 
 ### React App
 
