@@ -8,7 +8,7 @@
 - [Guía De Uso](#guía-de-uso)
     - [Loader](#loader-1)
     - [API](#api-1)
-        - [Full text search](#full-text-search)
+        - [Full Text Search](#full-text-search)
         - [Consulta De Canciones Por ID](#consulta-de-canciones-por-id)
     - [React App](#react-app-1)
 - [Pruebas Realizadas](#pruebas-realizadas)
@@ -51,9 +51,9 @@ No es necesario instalar nada de este módulo, ya que la aplicación se encuentr
 
 ### API
 
-* Abrir la herramienta para enviar peticiones HTTP.
+Abrir la herramienta para enviar peticiones HTTP.
 
-#### Full text search
+#### Full Text Search
 
 1. Utilizar el endpoint https://main-app.mangoocean-f33b36da.eastus.azurecontainerapps.io/open-lyrics-search/songs con método GET.
 2. Se recibiran los siguientes parámetros en la petición:
