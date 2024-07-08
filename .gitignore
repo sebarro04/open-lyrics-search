@@ -1,2 +1,3 @@
 P2.tar
 *.env
+*.env.local
