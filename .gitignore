@@ -1,3 +1,5 @@
 P2.tar
 *.env
-*.env.local
+*.env.localsrc/api/app/.env
+src/loader/app/.env
+src/react/openlyrics_search/.env.local
